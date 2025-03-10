@@ -1,9 +1,5 @@
 import { ReactNode } from 'react';
-
-enum UserRole {
-  Admin = 'admin',
-  User = 'user',
-}
+import { UserRole } from './common';
 
 export interface RouteItem {
   path: string;
