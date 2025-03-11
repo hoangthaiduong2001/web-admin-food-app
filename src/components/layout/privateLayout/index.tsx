@@ -21,7 +21,16 @@ const PrivateLayout = () => {
   if (!user) {
     return <Navigate to={paths.login} />;
   }
-  return <Outlet />;
+  return (
+    <>
+      <div>Header</div>
+      <div>Sidebar</div>
+      <div>
+        Page Content
+        <Outlet />
+      </div>
+    </>
+  );
 };
 
 export default PrivateLayout;

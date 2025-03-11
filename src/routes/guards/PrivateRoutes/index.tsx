@@ -1,25 +1,47 @@
 import { getUserInfo } from '@/config/storage';
 import { paths } from '@/routes/paths';
-import { useEffect } from 'react';
-import { createSearchParams, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { routes } from '@/routes/routes';
+import { UserRole } from '@/types/common';
+import { RouteItem } from '@/types/route';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
-export const PrivateRoutes = () => {
-  const navigate = useNavigate();
+const PrivateRoutes = () => {
   const user = getUserInfo();
-  const location = useLocation();
-  useEffect(() => {
-    if (!user) {
-      const currentPath = location.pathname;
-      navigate({
-        pathname: paths.login,
-        search: createSearchParams({ redirect: currentPath }).toString(),
-      });
-    } else {
-      navigate(paths.dashboard, { replace: true });
+  const role = user?.role;
+  const checkRoleRoute = (route: RouteItem) => {
+    if (role === UserRole.Admin) {
+      return route.element;
     }
-  }, [location.pathname]);
-  if (!user) {
-    return <Navigate to={paths.login} />;
-  }
-  return <Outlet />;
+    return (
+      <Navigate
+        to={paths.pageNotFound}
+        replace
+      />
+    );
+  };
+  const generateRoute = (routes: RouteItem[]) => {
+    return routes.map((route) => (
+      <Route
+        key={route.path}
+        path={route.path}
+        element={checkRoleRoute(route)}
+      />
+    ));
+  };
+  return (
+    <Routes>
+      {generateRoute(routes)}
+      <Route
+        path="*"
+        element={
+          <Navigate
+            to={paths.pageNotFound}
+            replace
+          />
+        }
+      />
+    </Routes>
+  );
 };
+
+export default PrivateRoutes;

@@ -2,7 +2,8 @@ import PrivateLayout from '@/components/layout/privateLayout';
 import PublicLayout from '@/components/layout/publicLayout';
 import PageNotFound from '@/pages/pageNotFound';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { DashboardPage, LoginPage } from './lazyLoad';
+import PrivateRoutes from './guards/PrivateRoutes';
+import { LoginPage } from './lazyLoad';
 import { paths } from './paths';
 
 const AppRoutes = () => {
@@ -15,21 +16,13 @@ const AppRoutes = () => {
             element={<LoginPage />}
           />
         </Route>
-        {/* <Route
-          path="/dashboard"
-          element={<DashboardPage />}
-        /> */}
         <Route
           path="/"
           element={<PrivateLayout />}
         >
           <Route
-            path="/dashboard"
-            element={<DashboardPage />}
-          />
-          <Route
             path="*"
-            element={<>Privivate</>}
+            element={<PrivateRoutes />}
           />
         </Route>
         <Route
