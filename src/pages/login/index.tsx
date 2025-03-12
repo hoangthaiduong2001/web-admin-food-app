@@ -1,3 +1,4 @@
+import { Button } from '@/components/Button';
 import Input from '@/components/Input';
 import { RootState } from '@/store';
 import { decrement, increment } from '@/store/features/counter/counterSlice';
@@ -22,6 +23,38 @@ const Login = () => {
         onChange={(e) => setValue(e.target.value)}
         readOnly
       />
+      <div className="flex gap-2">
+        <Button
+          variant="text"
+          size="sm"
+        >
+          Test
+        </Button>
+        <Button
+          variant="contained"
+          size="sm"
+        >
+          Test
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+        >
+          Test
+        </Button>
+        <Button
+          variant="success"
+          size="sm"
+        >
+          Test
+        </Button>
+        <Button
+          variant="destructive"
+          size="sm"
+        >
+          Test
+        </Button>
+      </div>
       <h1 className="text-red-500">Login</h1>
       <p>{count}</p>
       <button onClick={() => dispatch(increment())}>Increment</button>
