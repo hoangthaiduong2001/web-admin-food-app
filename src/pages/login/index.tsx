@@ -1,5 +1,6 @@
 import { Button } from '@/components/Button';
 import Input from '@/components/Input';
+import Select from '@/components/Select';
 import { RootState } from '@/store';
 import { decrement, increment } from '@/store/features/counter/counterSlice';
 import { useState } from 'react';
@@ -54,6 +55,9 @@ const Login = () => {
         >
           Test
         </Button>
+      </div>
+      <div className="mt-3">
+        <Select />
       </div>
       <h1 className="text-red-500">Login</h1>
       <p>{count}</p>
