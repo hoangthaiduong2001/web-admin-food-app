@@ -1,5 +1,6 @@
 import { Button } from '@/components/Button';
 import Input from '@/components/Input';
+import Select from '@/components/Select';
 import { RootState } from '@/store';
 import { decrement, increment } from '@/store/features/counter/counterSlice';
 import { useState } from 'react';
@@ -9,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [value, setValue] = useState('');
+  const [valueSelect, setValueSelect] = useState('');
   const count = useSelector((state: RootState) => state.count.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,6 +56,17 @@ const Login = () => {
         >
           Test
         </Button>
+      </div>
+      <div className="mt-3">
+        <Select
+          placeholder="placeholder test"
+          items={[
+            { label: 'Test1', value: 'test1' },
+            { label: 'Test2', value: 'test2' },
+          ]}
+          value={valueSelect}
+          onChange={setValueSelect}
+        />
       </div>
       <h1 className="text-red-500">Login</h1>
       <p>{count}</p>
