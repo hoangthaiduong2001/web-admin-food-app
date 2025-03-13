@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [value, setValue] = useState('');
+  const [valueSelect, setValueSelect] = useState('');
   const count = useSelector((state: RootState) => state.count.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,7 +58,15 @@ const Login = () => {
         </Button>
       </div>
       <div className="mt-3">
-        <Select />
+        <Select
+          placeholder="placeholder test"
+          items={[
+            { label: 'Test1', value: 'test1' },
+            { label: 'Test2', value: 'test2' },
+          ]}
+          value={valueSelect}
+          onChange={setValueSelect}
+        />
       </div>
       <h1 className="text-red-500">Login</h1>
       <p>{count}</p>
