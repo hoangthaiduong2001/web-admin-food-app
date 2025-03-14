@@ -1,12 +1,14 @@
 import { Button } from '@/components/Button';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
+import Table from '@/components/Table';
 import { RootState } from '@/store';
 import { decrement, increment } from '@/store/features/counter/counterSlice';
 import { useState } from 'react';
 import { FaEye, FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { columnsTable, TableContext } from './const';
 
 const Login = () => {
   const [value, setValue] = useState('');
@@ -68,6 +70,15 @@ const Login = () => {
           onChange={setValueSelect}
         />
       </div>
+      <Table
+        data={[]}
+        AddItem={() => <div>Add</div>}
+        EditItem={() => <div>Edit</div>}
+        filterName="number"
+        tableContext={TableContext}
+        columns={columnsTable}
+        name="table"
+      />
       <h1 className="text-red-500">Login</h1>
       <p>{count}</p>
       <button onClick={() => dispatch(increment())}>Increment</button>
