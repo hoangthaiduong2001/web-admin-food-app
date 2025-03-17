@@ -2,6 +2,7 @@ import { Button } from '@/components/Button';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import Table from '@/components/Table';
+import { dataTable } from '@/components/Table/const';
 import { RootState } from '@/store';
 import { decrement, increment } from '@/store/features/counter/counterSlice';
 import { useState } from 'react';
@@ -71,13 +72,22 @@ const Login = () => {
         />
       </div>
       <Table
-        data={[]}
+        name="table"
+        data={dataTable}
         AddItem={() => <div>Add</div>}
-        EditItem={() => <div>Edit</div>}
         filterName="number"
         tableContext={TableContext}
         columns={columnsTable}
-        name="table"
+        selectFilter={{
+          placeholder: 'test',
+          value: valueSelect,
+          onChange: setValueSelect,
+          items: [
+            { label: 'Test1', value: 'test1' },
+            { label: 'Test2', value: 'test2' },
+          ],
+        }}
+        isLink
       />
       <h1 className="text-red-500">Login</h1>
       <p>{count}</p>

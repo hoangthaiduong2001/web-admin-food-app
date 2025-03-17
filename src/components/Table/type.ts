@@ -24,7 +24,14 @@ export interface IItemTableContext<T extends IPlainObject> {
   setItemDelete?: (value: T | null) => void;
 }
 
-export type TTableProps<TRowDataType extends IPlainObject, TRowDataSort extends IPlainObject = object[]> = {
+export interface FilterItem {
+  placeholder: string;
+  items: ItemSelect[];
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export type TTableProps<TRowDataType extends IPlainObject> = {
   name: string;
   pathname?: string;
   filterName: string;
@@ -35,9 +42,8 @@ export type TTableProps<TRowDataType extends IPlainObject, TRowDataSort extends 
   tableContext: Context<IItemTableContext<TRowDataType>>;
   initRows?: TRowDataType[];
   AddItem: React.ComponentType;
-  EditItem: React.ComponentType<TEditItem>;
+  selectFilter: FilterItem;
   mutationItem?: UseMutateFunction<TData<TRowDataType>, Error, number, unknown>;
   queryListItem?: UseQueryResult<TData<TRowDataType[]>, Error>;
-  tableListSortedByNumber?: TRowDataSort;
   onChoose?: (value: TRowDataType) => void;
 };

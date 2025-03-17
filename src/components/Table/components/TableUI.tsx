@@ -3,7 +3,7 @@ import * as React from 'react';
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-auto h-[50vh] overflow-y-scroll">
+    <div className="relative w-full overflow-auto">
       <table
         ref={ref}
         className={cn('w-full caption-bottom text-sm', className)}
@@ -18,7 +18,7 @@ const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttribut
   ({ className, ...props }, ref) => (
     <thead
       ref={ref}
-      className={cn('[&_tr]:border-b', className)}
+      className={cn('[&_tr]:border-b bg-blue-300 p-1', className)}
       {...props}
     />
   )
@@ -51,7 +51,10 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
   ({ className, ...props }, ref) => (
     <tr
       ref={ref}
-      className={cn('border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted', className)}
+      className={cn(
+        'border-b border-gray-300 transition-colors text-center data-[state=selected]:bg-muted ',
+        className
+      )}
       {...props}
     />
   )
