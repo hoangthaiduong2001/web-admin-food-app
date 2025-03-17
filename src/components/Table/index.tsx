@@ -25,25 +25,25 @@ import Input from '../Input';
 import PaginationTable from '../Pagination';
 import TableSkeleton from '../Skeleton';
 
+import Select from '../Select';
 import { PAGE_SIZE } from './const';
 import { IItemTableContext, TTableProps } from './type';
 
-const Table = <TRowDataType extends IPlainObject, TRowDataSort extends IPlainObject = object[]>({
+const Table = <TRowDataType extends IPlainObject>({
   data,
   columns,
   tableContext,
   mutationItem,
   AddItem,
-  EditItem,
   name,
   isLink = false,
   pathname = '/',
   filterName,
   deleteById = true,
   queryListItem,
-  tableListSortedByNumber,
+  selectFilter,
   onChoose,
-}: TTableProps<TRowDataType, TRowDataSort>) => {
+}: TTableProps<TRowDataType>) => {
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
   const pageIndex = page - 1;
@@ -57,6 +57,7 @@ const Table = <TRowDataType extends IPlainObject, TRowDataSort extends IPlainObj
     pageIndex,
     pageSize: PAGE_SIZE,
   });
+  const { items, onChange, placeholder, value } = selectFilter;
 
   const table = useReactTable({
     data,
@@ -99,25 +100,30 @@ const Table = <TRowDataType extends IPlainObject, TRowDataSort extends IPlainObj
       }
     >
       <div className="w-full">
-        <EditItem
-          id={itemIdEdit}
-          setId={setItemIdEdit}
-        />
-        <div className="flex items-center py-4">
-          <Input
-            placeholder={`Filter ${filterName}`}
-            value={(table.getColumn(filterName)?.getFilterValue() as string) ?? ''}
-            onChange={(e) => table.getColumn(filterName)?.setFilterValue(e.target.value)}
-            className="max-w-sm"
-          />
+        <div className="flex items-center justify-between py-4">
+          <div className="flex gap-2 w-1/2">
+            <Select
+              placeholder={placeholder}
+              items={items}
+              value={value}
+              onChange={onChange}
+              className="w-1/3"
+            />
+            <Input
+              placeholder={`Filter by ${filterName}`}
+              value={(table.getColumn(filterName)?.getFilterValue() as string) ?? ''}
+              onChange={(e) => table.getColumn(filterName)?.setFilterValue(e.target.value)}
+              className="w-full"
+            />
+          </div>
           <div className="ml-auto flex items-center gap-2">{<AddItem />}</div>
         </div>
         {queryListItem?.isPending ? (
           <TableSkeleton />
         ) : (
-          <div className="rounded-md border">
+          <div className="rounded-md shadow overflow-hidden">
             <TableCore>
-              <TableHeader className="top-0 sticky bg-background">
+              <TableHeader className="top-0 sticky">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
@@ -132,13 +138,14 @@ const Table = <TRowDataType extends IPlainObject, TRowDataSort extends IPlainObj
                   </TableRow>
                 ))}
               </TableHeader>
-              <TableBody className="overflow-y-scroll max-h-[70vh]">
+              <TableBody className={`overflow-y-scroll ${table.getRowModel().rows?.length ? 'h-fit' : 'h-[50vh]'}`}>
                 {table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && 'selected'}
                       onClick={() => onChoose?.(row.original)}
+                      className="hover:bg-neutral-100"
                     >
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
@@ -149,7 +156,7 @@ const Table = <TRowDataType extends IPlainObject, TRowDataSort extends IPlainObj
                   <TableRow>
                     <TableCell
                       colSpan={columns.length}
-                      className="h-24 text-center"
+                      className="text-center"
                     >
                       No results.
                     </TableCell>
@@ -159,8 +166,8 @@ const Table = <TRowDataType extends IPlainObject, TRowDataSort extends IPlainObj
             </TableCore>
           </div>
         )}
-        <div className="flex items-center justify-end space-x-2 pt-4">
-          <div className="text-xs text-muted-foreground py-4 flex-1 ">
+        <div className="flex items-center justify-between space-x-2 pt-2">
+          <div className="text-xs text-muted-foreground">
             Display <strong>{table.getPaginationRowModel().rows.length}</strong> in <strong>{data.length}</strong>{' '}
             result
           </div>

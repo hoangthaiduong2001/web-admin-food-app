@@ -8,14 +8,7 @@ import PaginationItem from './components/paginationItem';
 import PaginationLink from './components/paginationLink';
 import PaginationNext from './components/paginationNext';
 import PaginationPrevious from './components/paginationPrevious';
-
-interface Props {
-  page: number;
-  pageSize: number;
-  pathname?: string;
-  isLink?: boolean;
-  onClick?: (pageNumber: number) => void;
-}
+import { IPaginationTable } from './type';
 
 const RANGE = 2;
 export default function PaginationTable({
@@ -24,7 +17,7 @@ export default function PaginationTable({
   pathname = '/',
   isLink = true,
   onClick = (pageNumber) => {},
-}: Props) {
+}: IPaginationTable) {
   const renderPagination = () => {
     let dotAfter = false;
     let dotBefore = false;
@@ -83,7 +76,7 @@ export default function PaginationTable({
                 onClick={() => {
                   onClick(pageNumber);
                 }}
-                variant={pageNumber === page ? 'outline' : 'contained'}
+                variant={pageNumber === page ? 'contained' : 'outline'}
               >
                 {pageNumber}
               </Button>
@@ -113,9 +106,10 @@ export default function PaginationTable({
             />
           ) : (
             <Button
+              size="sm"
               disabled={page === 1}
               className="h-9 w-9 p-0"
-              variant="contained"
+              variant="text"
               onClick={() => {
                 onClick(page - 1);
               }}
@@ -144,9 +138,10 @@ export default function PaginationTable({
             />
           ) : (
             <Button
+              size="sm"
               disabled={page === pageSize}
               className="h-9 w-9 p-0"
-              variant="contained"
+              variant="text"
               onClick={() => {
                 onClick(page + 1);
               }}
