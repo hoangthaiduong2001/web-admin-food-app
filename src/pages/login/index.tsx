@@ -1,4 +1,5 @@
 import { Button } from '@/components/Button';
+import Dialog from '@/components/Dialog';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import Table from '@/components/Table';
@@ -13,6 +14,7 @@ import { columnsTable, TableContext } from './const';
 
 const Login = () => {
   const [value, setValue] = useState('');
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [valueSelect, setValueSelect] = useState('');
   const count = useSelector((state: RootState) => state.count.value);
   const dispatch = useDispatch();
@@ -88,6 +90,18 @@ const Login = () => {
           ],
         }}
         isLink
+      />
+      <Dialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        titleButton="Dialog"
+        titleDialog="Title"
+        children={<>Content</>}
+        description="description"
+        onClick={() => {
+          console.log('submit');
+          setOpenDialog(false);
+        }}
       />
       <h1 className="text-red-500">Login</h1>
       <p>{count}</p>
