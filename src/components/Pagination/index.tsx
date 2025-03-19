@@ -10,7 +10,7 @@ import PaginationNext from './components/paginationNext';
 import PaginationPrevious from './components/paginationPrevious';
 import { IPaginationTable } from './type';
 
-const RANGE = 2;
+const RANGE = 3;
 export default function PaginationTable({
   page,
   pageSize,
@@ -30,6 +30,7 @@ export default function PaginationTable({
           </PaginationItem>
         );
       }
+
       return null;
     };
     const renderDotAfter = (index: number) => {
@@ -47,16 +48,18 @@ export default function PaginationTable({
       .fill(0)
       .map((_, index) => {
         const pageNumber = index + 1;
-        if (page <= RANGE * 2 + 1 && pageNumber > page + RANGE && pageNumber < pageSize - RANGE + 1) {
-          return renderDotAfter(index);
-        } else if (page > RANGE * 2 + 1 && page < pageSize - RANGE * 2) {
-          if (pageNumber < page - RANGE && pageNumber > RANGE) {
-            return renderDotBefore(index);
-          } else if (pageNumber > page + RANGE && pageNumber < pageSize - RANGE + 1) {
-            return renderDotAfter(index);
+        if (
+          pageNumber !== 1 &&
+          pageNumber !== 2 &&
+          pageNumber !== pageSize - 1 &&
+          pageNumber !== pageSize &&
+          pageNumber !== page
+        ) {
+          if (page > RANGE && pageNumber < page) {
+            return renderDotBefore(page);
+          } else if (pageSize - page >= RANGE && pageNumber > page) {
+            return renderDotAfter(page);
           }
-        } else if (page >= pageSize - RANGE * 2 && pageNumber > RANGE && pageNumber < page - RANGE) {
-          return renderDotBefore(index);
         }
         return (
           <PaginationItem key={index}>

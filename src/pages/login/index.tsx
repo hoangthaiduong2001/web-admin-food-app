@@ -1,12 +1,14 @@
+import Alert from '@/components/Alert';
 import { Button } from '@/components/Button';
 import Dialog from '@/components/Dialog';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import Table from '@/components/Table';
 import { dataTable } from '@/components/Table/const';
+import { showToast } from '@/components/Toast';
 import { RootState } from '@/store';
 import { decrement, increment } from '@/store/features/counter/counterSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaEye, FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -15,10 +17,15 @@ import { columnsTable, TableContext } from './const';
 const Login = () => {
   const [value, setValue] = useState('');
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [openAlter, setOpenAlter] = useState<boolean>(false);
   const [valueSelect, setValueSelect] = useState('');
   const count = useSelector((state: RootState) => state.count.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    showToast({ message: 'success', type: 'success' });
+  }, []);
   return (
     <div>
       <Input
@@ -102,6 +109,14 @@ const Login = () => {
           console.log('submit');
           setOpenDialog(false);
         }}
+      />
+      <Alert
+        description="description alter"
+        onClick={() => console.log('alter')}
+        open={openAlter}
+        setOpen={setOpenAlter}
+        titleAlter="Alter"
+        titleButton="Alter"
       />
       <h1 className="text-red-500">Login</h1>
       <p>{count}</p>

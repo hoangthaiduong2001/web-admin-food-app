@@ -1,4 +1,5 @@
 import { Button } from '@/components/Button';
+import SortingColumn from '@/components/Table/components/sortingTable';
 import { IItemTableContext } from '@/components/Table/type';
 import { ColumnDef } from '@tanstack/react-table';
 import { createContext } from 'react';
@@ -6,7 +7,12 @@ import { createContext } from 'react';
 export const columnsTable: ColumnDef<any>[] = [
   {
     accessorKey: 'number',
-    header: 'ID',
+    header: ({ column }) => (
+      <SortingColumn
+        column={column}
+        label="ID"
+      />
+    ),
     cell: ({ row }) => <div className="capitalize">{row.getValue('number')}</div>,
     filterFn: (rows, columnId, filterValue) => {
       if (!filterValue) return true;
@@ -15,7 +21,12 @@ export const columnsTable: ColumnDef<any>[] = [
   },
   {
     accessorKey: 'capacity',
-    header: 'Capacity',
+    header: ({ column }) => (
+      <SortingColumn
+        column={column}
+        label="Capacity"
+      />
+    ),
     cell: ({ row }) => <div className="capitalize">{row.getValue('capacity')}</div>,
   },
   {
