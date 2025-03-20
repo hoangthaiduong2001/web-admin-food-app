@@ -96,6 +96,7 @@
 import Alert from '@/components/Alert';
 import { Button } from '@/components/Button';
 import Dialog from '@/components/Dialog';
+import { Form, FormField, FormItem, FormLabel } from '@/components/Form';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import Table from '@/components/Table';
@@ -105,6 +106,7 @@ import { showToast } from '@/components/Toast';
 import { RootState } from '@/store';
 import { decrement, increment } from '@/store/features/counter/counterSlice';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { FaEye, FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -118,6 +120,17 @@ const DemoComponents = () => {
   const count = useSelector((state: RootState) => state.count.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const form = useForm({
+    resolver: async (values) => {
+      return {
+        values: values.username ? values : {},
+        errors: values.username ? {} : { username: { type: 'required', message: 'Username is required' } },
+      };
+    },
+  });
+  const {
+    formState: { errors },
+  } = form;
 
   useEffect(() => {
     showToast({ message: 'success', type: 'success' });
@@ -214,6 +227,29 @@ const DemoComponents = () => {
         titleAlter="Alter"
         titleButton="Alter"
       />
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(() => console.log('123'))}
+          className="space-y-8"
+        >
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field: { name, onChange, value } }) => (
+              <FormItem>
+                <FormLabel className="flex justify-self-start items-start">Username</FormLabel>
+                <Input
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                  errorMessage={errors.username?.message as string}
+                />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Submit</Button>
+        </form>
+      </Form>
       <h1 className="text-red-500">Login</h1>
       <p>{count}</p>
       <button onClick={() => dispatch(increment())}>Increment</button>

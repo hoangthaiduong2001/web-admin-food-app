@@ -1,4 +1,5 @@
 import { cn } from '@/config/utils';
+import { useId } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import { Button } from '../Button';
 import Pagination from './components/pagination';
@@ -21,29 +22,30 @@ export default function PaginationTable({
   const renderPagination = () => {
     let dotAfter = false;
     let dotBefore = false;
+    const id = useId();
     const renderDotBefore = (index: number) => {
       if (!dotBefore) {
         dotBefore = true;
         return (
-          <PaginationItem>
+          <PaginationItem key={index}>
             <PaginationEllipsis />
           </PaginationItem>
         );
       }
-
       return null;
     };
     const renderDotAfter = (index: number) => {
       if (!dotAfter) {
         dotAfter = true;
         return (
-          <PaginationItem>
+          <PaginationItem key={index}>
             <PaginationEllipsis />
           </PaginationItem>
         );
       }
       return null;
     };
+
     return Array(pageSize)
       .fill(0)
       .map((_, index) => {
@@ -62,7 +64,7 @@ export default function PaginationTable({
           }
         }
         return (
-          <PaginationItem key={index}>
+          <PaginationItem key={`page-${index}`}>
             {!isLink ? (
               <PaginationLink
                 to={{
