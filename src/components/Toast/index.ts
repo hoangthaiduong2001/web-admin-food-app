@@ -1,5 +1,12 @@
+import { IPlainObject } from '@/types/common';
 import { toast } from 'react-toastify';
 import { IShowToast } from './type';
+
+const objectTypeToast: IPlainObject = {
+  success: 'green',
+  error: 'red',
+  warning: 'orange',
+};
 
 export const showToast = ({ message, type }: IShowToast) => {
   toast.dark(message, {
@@ -11,7 +18,7 @@ export const showToast = ({ message, type }: IShowToast) => {
     draggable: false,
     progress: 0,
     style: {
-      backgroundColor: type === 'success' ? 'green' : 'red',
+      backgroundColor: objectTypeToast[type],
       color: 'white',
     },
   });

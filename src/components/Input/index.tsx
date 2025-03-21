@@ -4,9 +4,12 @@ import * as React from 'react';
 const Input = React.forwardRef<
   HTMLInputElement,
   React.ComponentProps<'input'> & {
+    maxLength?: number;
+    label?: string;
     startAdornment?: React.ReactNode;
     endAdornment?: React.ReactNode;
     errorMessage?: string;
+    onClickEndAdornment?: () => void;
   }
 >(
   (
@@ -21,15 +24,26 @@ const Input = React.forwardRef<
       onChange,
       value,
       placeholder,
+      onClickEndAdornment,
+      maxLength,
+      label,
       ...props
     },
     ref
   ) => {
     return (
-      <div className="flex flex-col gap-1 w-full">
+      <div className="flex flex-col gap-1 w-full mb-3">
+        <div className="flex font-semibold">{label}</div>
         <div className="relative flex items-center">
           {startAdornment && <span className="absolute left-3 w-4 h-4">{startAdornment}</span>}
-          {endAdornment && <span className="absolute right-3 w-4 h-4">{endAdornment}</span>}
+          {endAdornment && (
+            <span
+              className="absolute right-3 w-4 h-4 cursor-pointer"
+              onClick={onClickEndAdornment}
+            >
+              {endAdornment}
+            </span>
+          )}
           <input
             type={type}
             className={cn(
@@ -43,6 +57,7 @@ const Input = React.forwardRef<
             readOnly={readOnly}
             disabled={disabled}
             value={value}
+            maxLength={maxLength}
             onChange={onChange}
             placeholder={placeholder}
             {...props}

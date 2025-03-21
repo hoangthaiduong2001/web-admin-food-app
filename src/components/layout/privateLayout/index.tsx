@@ -1,14 +1,16 @@
-import { getUserInfo } from '@/config/storage';
 import { paths } from '@/routes/paths';
+import { RootState } from '@/store';
+import { UserRole } from '@/types/common';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { createSearchParams, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const PrivateLayout = () => {
   const navigate = useNavigate();
-  const user = getUserInfo();
+  const user = useSelector((state: RootState) => state.user);
   const location = useLocation();
   useEffect(() => {
-    if (!user) {
+    if (user.role !== UserRole.Admin) {
       const currentPath = location.pathname;
       navigate({
         pathname: paths.login,
@@ -18,7 +20,7 @@ const PrivateLayout = () => {
       navigate(paths.dashboard, { replace: true });
     }
   }, [location.pathname]);
-  if (!user) {
+  if (user.role !== UserRole.Admin) {
     return <Navigate to={paths.login} />;
   }
   return (
