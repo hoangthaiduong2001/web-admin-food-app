@@ -3,6 +3,12 @@ import SortingColumn from '@/components/Table/components/sortingTable';
 import { IItemTableContext } from '@/components/Table/type';
 import { ColumnDef } from '@tanstack/react-table';
 import { createContext } from 'react';
+import { LoginSchemaType } from './schema';
+
+export const defaultValueLogin: LoginSchemaType = {
+  username: '',
+  password: '',
+};
 
 export const columnsTable: ColumnDef<any>[] = [
   {

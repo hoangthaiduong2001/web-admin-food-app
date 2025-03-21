@@ -1,12 +1,13 @@
-import { getUserInfo } from '@/config/storage';
 import { paths } from '@/routes/paths';
 import { routes } from '@/routes/routes';
+import { RootState } from '@/store';
 import { UserRole } from '@/types/common';
 import { RouteItem } from '@/types/route';
+import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 const PrivateRoutes = () => {
-  const user = getUserInfo();
+  const user = useSelector((state: RootState) => state.user);
   const role = user?.role;
   const checkRoleRoute = (route: RouteItem) => {
     if (role === UserRole.Admin) {

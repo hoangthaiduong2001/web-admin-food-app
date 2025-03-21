@@ -1,4 +1,4 @@
-type TypeToast = 'error' | 'success';
+type TypeToast = 'error' | 'success' | 'warning';
 
 export interface IShowToast {
   message: string;
