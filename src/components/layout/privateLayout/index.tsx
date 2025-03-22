@@ -1,3 +1,5 @@
+import { AppSidebar } from '@/components/Sidebar';
+import SidebarProvider from '@/components/Sidebar/components/sidebarProvider';
 import { paths } from '@/routes/paths';
 import { RootState } from '@/store';
 import { UserRole } from '@/types/common';
@@ -24,14 +26,15 @@ const PrivateLayout = () => {
     return <Navigate to={paths.login} />;
   }
   return (
-    <>
-      <div>Header</div>
-      <div>Sidebar</div>
-      <div>
+    <SidebarProvider>
+      <div className="flex">
+        <div>
+          <AppSidebar />
+        </div>
         Page Content
         <Outlet />
       </div>
-    </>
+    </SidebarProvider>
   );
 };
 
