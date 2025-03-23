@@ -1,5 +1,10 @@
+import SheetContent from '@/components/Sheet/components/sheetContent';
+import SheetDescription from '@/components/Sheet/components/sheetDescription';
+import SheetHeader from '@/components/Sheet/components/sheetHeader';
+import SheetTitle from '@/components/Sheet/components/sheetTitle';
 import { cn } from '@/config/utils';
 import useSidebar from '@/hooks/useSidebar';
+import { Root } from '@radix-ui/react-dialog';
 import { ComponentProps, forwardRef } from 'react';
 
 const Sidebar = forwardRef<
@@ -24,33 +29,33 @@ const Sidebar = forwardRef<
     );
   }
 
-  // if (isMobile) {
-  //   return (
-  //     <Root
-  //       open={openMobile}
-  //       onOpenChange={setOpenMobile}
-  //       {...props}
-  //     >
-  //       <SheetContent
-  //         data-sidebar="sidebar"
-  //         data-mobile="true"
-  //         className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
-  //         style={
-  //           {
-  //             '--sidebar-width': '18rem',
-  //           } as React.CSSProperties
-  //         }
-  //         side={side}
-  //       >
-  //         <SheetHeader className="sr-only">
-  //           <SheetTitle>Sidebar</SheetTitle>
-  //           <SheetDescription>Displays the mobile sidebar.</SheetDescription>
-  //         </SheetHeader>
-  //         <div className="flex h-full w-full flex-col">{children}</div>
-  //       </SheetContent>
-  //     </Root>
-  //   );
-  // }
+  if (isMobile) {
+    return (
+      <Root
+        open={openMobile}
+        onOpenChange={setOpenMobile}
+        {...props}
+      >
+        <SheetContent
+          data-sidebar="sidebar"
+          data-mobile="true"
+          className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+          style={
+            {
+              '--sidebar-width': '18rem',
+            } as React.CSSProperties
+          }
+          side={side}
+        >
+          <SheetHeader className="sr-only">
+            <SheetTitle>Sidebar</SheetTitle>
+            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+          </SheetHeader>
+          <div className="flex h-full w-full flex-col">{children}</div>
+        </SheetContent>
+      </Root>
+    );
+  }
 
   return (
     <div
@@ -74,7 +79,7 @@ const Sidebar = forwardRef<
       />
       <div
         className={cn(
-          `inset-y-0 z-10 hidden h-svh ${
+          `inset-y-0 z-10 hidden h-svh transition delay-150 duration-300 ${
             isCollapsed ? 'group-data-[collapsible=icon]:w-[--sidebar-width-icon]' : 'w-[--sidebar-width]'
           } transition-[left,right,width] duration-200 ease-linear md:flex`,
           side === 'left'

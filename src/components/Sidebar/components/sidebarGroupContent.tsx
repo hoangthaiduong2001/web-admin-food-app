@@ -5,7 +5,7 @@ const SidebarGroupContent = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({
   <div
     ref={ref}
     data-sidebar="group-content"
-    className={cn('w-full text-sm', className)}
+    className={cn(' flex flex-col w-full text-sm text-neutral-700', className)}
     {...props}
   />
 ));
