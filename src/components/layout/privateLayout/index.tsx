@@ -1,5 +1,6 @@
 import { AppSidebar } from '@/components/Sidebar';
 import SidebarProvider from '@/components/Sidebar/components/sidebarProvider';
+import SidebarTrigger from '@/components/Sidebar/components/sidebarTrigger';
 import { paths } from '@/routes/paths';
 import { RootState } from '@/store';
 import { UserRole } from '@/types/common';
@@ -18,8 +19,6 @@ const PrivateLayout = () => {
         pathname: paths.login,
         search: createSearchParams({ redirect: currentPath }).toString(),
       });
-    } else {
-      navigate(paths.dashboard, { replace: true });
     }
   }, [location.pathname]);
   if (user.role !== UserRole.Admin) {
@@ -27,11 +26,12 @@ const PrivateLayout = () => {
   }
   return (
     <SidebarProvider>
-      <div className="flex">
-        <div>
-          <AppSidebar />
+      <AppSidebar />
+      <div className="flex flex-col w-full">
+        <div className="flex">
+          <SidebarTrigger />
+          <div className="bg-blue-500 w-full">Header</div>
         </div>
-        Page Content
         <Outlet />
       </div>
     </SidebarProvider>
