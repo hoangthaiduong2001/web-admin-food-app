@@ -8,14 +8,28 @@ import AlertDialogHeader from './components/alertDialogHeader';
 import AlertDialogTitle from './components/alertDialogTitle';
 import { IAlter } from './type';
 
-const Alert = ({ titleAlter, description, onClick, open, setOpen, titleButton }: IAlter) => {
+const Alert = ({
+  titleAlter,
+  description,
+  onClick,
+  open,
+  setOpen,
+  titleButton,
+  variantTile = 'outline',
+  variantSubmit = 'contained',
+}: IAlter) => {
   return (
     <Root
       open={open}
       onOpenChange={setOpen}
     >
       <Trigger asChild>
-        <Button variant="outline">{titleButton}</Button>
+        <Button
+          className="p-0 hover:bg-white mt-2 active:bg-white"
+          variant={variantTile}
+        >
+          {titleButton}
+        </Button>
       </Trigger>
       <AlertDialogContent className="bg-white">
         <AlertDialogHeader>
@@ -26,7 +40,7 @@ const Alert = ({ titleAlter, description, onClick, open, setOpen, titleButton }:
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Button
             type="submit"
-            variant="contained"
+            variant={variantSubmit}
             onClick={onClick}
           >
             Save

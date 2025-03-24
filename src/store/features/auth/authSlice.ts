@@ -1,13 +1,6 @@
-import { UserRole } from '@/types/common';
 import { IUser } from '@/types/user';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-const initialState: IUser = {
-  _id: '',
-  username: '',
-  email: '',
-  role: UserRole.User,
-};
+import { initialState } from './const';
 
 export const userState = createSlice({
   name: 'user',
