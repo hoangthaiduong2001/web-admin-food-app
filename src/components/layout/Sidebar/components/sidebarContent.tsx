@@ -9,9 +9,9 @@ const SidebarContent = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ clas
       ref={ref}
       data-sidebar="content"
       className={cn(
-        `flex min-h-0 ${
-          state === 'collapsed' ? 'duration-300 ease-linear pr-0' : 'duration-200 ease-linear pr-10'
-        } flex-1 gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden border-neutral-200 border-r-2 bg-neutral-50`,
+        `flex min-h-0 will-change-[padding,transform] transition-all duration-200 ease-linear ${
+          state === 'collapsed' ? 'pr-0 overflow-hidden' : 'pr-10 overflow-auto'
+        } flex-1 gap-2 border-neutral-200 border-r-2 bg-neutral-50`,
         className
       )}
       {...props}
