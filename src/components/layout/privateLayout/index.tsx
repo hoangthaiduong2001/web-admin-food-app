@@ -1,12 +1,12 @@
-import { AppSidebar } from '@/components/Sidebar';
-import SidebarProvider from '@/components/Sidebar/components/sidebarProvider';
-import SidebarTrigger from '@/components/Sidebar/components/sidebarTrigger';
+import SidebarProvider from '@/components/layout/Sidebar/components/sidebarProvider';
 import { paths } from '@/routes/paths';
 import { RootState } from '@/store';
 import { UserRole } from '@/types/common';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { createSearchParams, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import Header from '../Header';
+import AppSidebar from '../Sidebar';
 
 const PrivateLayout = () => {
   const navigate = useNavigate();
@@ -28,10 +28,7 @@ const PrivateLayout = () => {
     <SidebarProvider>
       <AppSidebar />
       <div className="flex flex-col w-full">
-        <div className="flex">
-          <SidebarTrigger />
-          <div className="bg-blue-500 w-full">Header</div>
-        </div>
+        <Header />
         <Outlet />
       </div>
     </SidebarProvider>

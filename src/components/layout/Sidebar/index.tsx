@@ -8,7 +8,7 @@ import SidebarMenu from './components/sidebarMenu';
 import SidebarMenuButton from './components/sidebarMenuButton';
 import SidebarMenuItem from './components/sidebarMenuItem';
 
-export function AppSidebar() {
+const AppSidebar = () => {
   return (
     <Sidebar
       variant="sidebar"
@@ -41,4 +41,6 @@ export function AppSidebar() {
       </SidebarContent>
     </Sidebar>
   );
-}
+};
+
+export default AppSidebar;

@@ -1,4 +1,4 @@
-import { SidebarContextProps } from '@/components/Sidebar/type';
+import { SidebarContextProps } from '@/components/layout/Sidebar/type';
 import { createContext, useContext } from 'react';
 
 export const SidebarContext = createContext<SidebarContextProps | null>(null);
