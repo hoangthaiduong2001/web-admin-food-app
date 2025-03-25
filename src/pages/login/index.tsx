@@ -2,7 +2,7 @@ import { useLoginMutation } from '@/apis/hooks/auth';
 import { Button } from '@/components/Button';
 import Input from '@/components/Input';
 import { showToast } from '@/components/Toast';
-import { login } from '@/store/features/login/loginSlice';
+import { login } from '@/store/features/auth/authSlice';
 import { UserRole } from '@/types/common';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
