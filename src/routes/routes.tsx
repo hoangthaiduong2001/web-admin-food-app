@@ -1,6 +1,7 @@
+import { AiFillProduct } from 'react-icons/ai';
 import { FaHome, FaUserEdit } from 'react-icons/fa';
 import { RouteItem } from '../types/route';
-import { DashboardPage, UserPage } from './lazyLoad';
+import { DashboardPage, ProductPage, UserPage } from './lazyLoad';
 import { paths } from './paths';
 
 export const routes: RouteItem[] = [
@@ -15,5 +16,11 @@ export const routes: RouteItem[] = [
     title: 'User',
     element: <UserPage />,
     icon: <FaUserEdit />,
+  },
+  {
+    path: paths.product,
+    title: 'Product',
+    element: <ProductPage />,
+    icon: <AiFillProduct />,
   },
 ];

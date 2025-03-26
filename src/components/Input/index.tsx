@@ -37,7 +37,7 @@ const Input = React.forwardRef<
       <div className="flex flex-col gap-1 w-full">
         <div className="flex font-semibold">
           {label}
-          {required && <span className="text-red-500 pl-0.5">*</span>}
+          {required && <span className="text-blue-500 pl-0.5">*</span>}
         </div>
         <div className="relative flex items-center z-10">
           {startAdornment && <span className="absolute left-3 w-4 h-4">{startAdornment}</span>}

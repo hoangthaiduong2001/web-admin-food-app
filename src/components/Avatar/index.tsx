@@ -1,11 +1,12 @@
-import { IUser } from '@/types/user';
 import AvatarCore from './components/avatar';
 import AvatarFallback from './components/avatarFallback';
+import AvatarImage from './components/avatarImage';
 
-const Avatar = ({ user }: { user: IUser }) => {
+const Avatar = ({ url }: { url: string }) => {
   return (
-    <AvatarCore>
-      <AvatarFallback>{user?.username.slice(0, 2).toUpperCase()}</AvatarFallback>
+    <AvatarCore className="aspect-square text-center w-[100px] h-[100px] rounded-md object-cover">
+      <AvatarImage src={url} />
+      <AvatarFallback>{'Img'.toUpperCase()}</AvatarFallback>
     </AvatarCore>
   );
 };
