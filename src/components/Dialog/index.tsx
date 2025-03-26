@@ -1,6 +1,7 @@
 import { Close, Dialog as DialogCore, Trigger } from '@radix-ui/react-dialog';
 
 import { cn } from '@/config/utils';
+import { sizeComponent } from '@/types/common';
 import { Button } from '../Button';
 import DialogContent from './components/dialogContent';
 import DialogDescription from './components/dialogDescription';
@@ -9,22 +10,32 @@ import DialogHeader from './components/dialogHeader';
 import DialogTitle from './components/dialogTitle';
 import { IDialog } from './type';
 
-const Dialog = ({ titleDialog, titleButton, description, onClick, open, setOpen, children }: IDialog) => {
+const Dialog = ({
+  titleDialog,
+  titleButton,
+  description,
+  onClick,
+  open,
+  setOpen,
+  children,
+  size = 'md',
+  variantButton = 'outline',
+}: IDialog) => {
   return (
     <DialogCore
       onOpenChange={setOpen}
       open={open}
     >
       <Trigger asChild>
-        <Button variant="outline">{titleButton}</Button>
+        <Button variant={variantButton}>{titleButton}</Button>
       </Trigger>
-      <DialogContent className={cn('sm:max-w-[425px] z-50 bg-white')}>
+      <DialogContent className={cn(sizeComponent[size], 'z-50 bg-white')}>
         <DialogHeader>
           <DialogTitle>{titleDialog}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         {children}
-        <DialogFooter className="sm:justify-end">
+        <DialogFooter className="justify-end">
           <Close asChild>
             <Button variant="outline">Close</Button>
           </Close>
@@ -33,7 +44,7 @@ const Dialog = ({ titleDialog, titleButton, description, onClick, open, setOpen,
             variant="contained"
             onClick={onClick}
           >
-            Save changes
+            Submit
           </Button>
         </DialogFooter>
       </DialogContent>

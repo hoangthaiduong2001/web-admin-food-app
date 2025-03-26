@@ -7,6 +7,7 @@ export interface IAlter {
   description: string;
   variantTile?: variantButton;
   variantSubmit?: variantButton;
+  classNameButton?: string;
   open: boolean;
   setOpen: (value: boolean) => void;
   onClick: () => void;

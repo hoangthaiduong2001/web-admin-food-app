@@ -3,6 +3,7 @@ import { useState } from 'react';
 import SelectContent from './components/SelectContent';
 import SelectItem from './components/SelectItem';
 import SelectTrigger from './components/SelectTrigger';
+import { ISelect } from './type';
 
 const Select = ({ items, onChange, value, placeholder, className }: ISelect) => {
   const [open, setOpen] = useState<boolean>(false);

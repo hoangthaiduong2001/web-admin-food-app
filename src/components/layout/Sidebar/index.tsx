@@ -13,6 +13,7 @@ const AppSidebar = () => {
     <Sidebar
       variant="sidebar"
       collapsible="icon"
+      className="h-full"
     >
       <SidebarContent>
         <SidebarGroup>

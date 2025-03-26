@@ -44,6 +44,7 @@ const DropdownAvatar = () => {
       >
         <DropdownMenuLabel className="border-b border-neutral-300">{user.username}</DropdownMenuLabel>
         <Alert
+          classNameButton="p-0 hover:bg-white mt-2 active:bg-white"
           description="Are you want logout"
           onClick={handleLogout}
           open={open}

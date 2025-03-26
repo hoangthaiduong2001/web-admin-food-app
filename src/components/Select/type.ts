@@ -1,9 +1,9 @@
-interface ItemSelect {
+export interface ItemSelect {
   label: string;
   value: string;
 }
 
-interface ISelect {
+export interface ISelect {
   items: ItemSelect[];
   placeholder: string;
   value: string;

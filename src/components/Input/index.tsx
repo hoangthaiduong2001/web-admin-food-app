@@ -10,6 +10,7 @@ const Input = React.forwardRef<
     endAdornment?: React.ReactNode;
     errorMessage?: string;
     onClickEndAdornment?: () => void;
+    required?: boolean;
   }
 >(
   (
@@ -27,14 +28,18 @@ const Input = React.forwardRef<
       onClickEndAdornment,
       maxLength,
       label,
+      required,
       ...props
     },
     ref
   ) => {
     return (
-      <div className="flex flex-col gap-1 w-full mb-3">
-        <div className="flex font-semibold">{label}</div>
-        <div className="relative flex items-center">
+      <div className="flex flex-col gap-1 w-full">
+        <div className="flex font-semibold">
+          {label}
+          {required && <span className="text-red-500 pl-0.5">*</span>}
+        </div>
+        <div className="relative flex items-center z-10">
           {startAdornment && <span className="absolute left-3 w-4 h-4">{startAdornment}</span>}
           {endAdornment && (
             <span
