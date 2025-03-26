@@ -3,7 +3,7 @@ import SidebarTrigger from '@/components/layout/Sidebar/components/sidebarTrigge
 
 const Header = () => {
   return (
-    <div className="flex w-full items-center justify-between py-2 px-4">
+    <div className="sticky z-50 flex w-full items-center justify-between py-2 px-4 top-0 bg-white shadow-md">
       <SidebarTrigger />
       <DropdownAvatar />
     </div>

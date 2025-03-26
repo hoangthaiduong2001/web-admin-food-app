@@ -12,6 +12,6 @@ export const useLoginMutation = () => {
 export const useLogoutMutation = () => {
   return useQuery<LogoutResType, ErrorType>({
     queryFn: logout,
-    queryKey: ['logoutUser'],
+    queryKey: ['logout-user'],
   });
 };

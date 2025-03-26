@@ -1,3 +1,4 @@
+import { cn } from '@/config/utils';
 import { Root, Trigger } from '@radix-ui/react-alert-dialog';
 import { Button } from '../Button';
 import AlertDialogCancel from './components/alertDialogCancel';
@@ -17,6 +18,7 @@ const Alert = ({
   titleButton,
   variantTile = 'outline',
   variantSubmit = 'contained',
+  classNameButton,
 }: IAlter) => {
   return (
     <Root
@@ -25,7 +27,7 @@ const Alert = ({
     >
       <Trigger asChild>
         <Button
-          className="p-0 hover:bg-white mt-2 active:bg-white"
+          className={cn('', classNameButton)}
           variant={variantTile}
         >
           {titleButton}
