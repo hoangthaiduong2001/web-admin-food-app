@@ -9,7 +9,20 @@ export interface IProduct {
   category: string[];
 }
 
-export interface ProductResType {
+export interface GetAllProductResType {
   total: number;
+  data: IProduct[];
+}
+
+export interface ProductBodyType {
+  title: string;
+  price: number;
+  discount?: number;
+  desc: string;
+  img?: string | File;
+}
+
+export interface ProductResType {
+  message: string;
   data: IProduct[];
 }

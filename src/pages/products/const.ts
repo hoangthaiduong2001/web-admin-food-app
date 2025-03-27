@@ -1,4 +1,5 @@
 import { ItemSelect } from '@/components/Select/type';
+import { ProductSchemaType } from './schema';
 
 export const filterProductTable: ItemSelect[] = [
   {
@@ -18,3 +19,10 @@ export const filterProductTable: ItemSelect[] = [
     value: 'desc',
   },
 ];
+
+export const defaultCreateProduct: ProductSchemaType = {
+  title: '',
+  price: 0,
+  discount: 0,
+  desc: '',
+};

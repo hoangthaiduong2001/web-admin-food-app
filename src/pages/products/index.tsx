@@ -1,8 +1,8 @@
 import { useGetAllProduct } from '@/apis/hooks/product';
-import InputFile from '@/components/InputFile';
 import Table from '@/components/Table';
 import { useState } from 'react';
 import { productColumns } from './column';
+import AddProduct from './components/AddProduct';
 import { filterProductTable } from './const';
 
 const Product = () => {
@@ -10,10 +10,9 @@ const Product = () => {
   const { data, isPending } = useGetAllProduct();
   return (
     <div className="px-4">
-      <InputFile />
       <Table
         data={data?.data || []}
-        AddItem={() => <>Add</>}
+        AddItem={() => <AddProduct />}
         isPending={isPending}
         columns={productColumns}
         selectFilter={{

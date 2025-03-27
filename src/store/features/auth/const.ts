@@ -5,5 +5,7 @@ export const initialState: IUser = {
   _id: '',
   username: '',
   email: '',
+  address: '',
+  phone: '',
   role: UserRole.User,
 };

@@ -4,28 +4,24 @@ import Avatar from '../Avatar';
 import Input from '../Input';
 import { showToast } from '../Toast';
 
-const InputFile = () => {
+const InputFile = ({ onChange }: { onChange: (file: File | null) => void }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) {
-      const file = e.target.files[0];
-      if (!file.type.match('image/png|image/jpeg|image/jpg|image/gif|image/svg+xml')) {
-        showToast({ message: 'Invalid file type', type: 'error' });
-        return;
-      }
-      setPreview(URL.createObjectURL(file));
+  const handleFileChange = (file: File) => {
+    if (!file) return;
+    if (!file.type.match('image/png|image/jpeg|image/jpg|image/gif|image/svg+xml')) {
+      showToast({ message: 'Invalid file type', type: 'error' });
+      return;
     }
+    onChange(file);
+    setPreview(URL.createObjectURL(file));
   };
-
   const handleClear = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
     setPreview(null);
   };
-
   return (
     <div className="flex items-center space-x-2">
       {preview ? (
@@ -42,7 +38,12 @@ const InputFile = () => {
           ref={fileInputRef}
           type="file"
           className="cursor-pointer text-md md:text-md"
-          onChange={handleFileChange}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              handleFileChange(file);
+            }
+          }}
         />
       )}
     </div>
