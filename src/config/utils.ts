@@ -11,10 +11,11 @@ export const httpClient = async <TRes, TBody>(
   body?: TBody,
   headers: Record<string, string> = { 'Content-Type': 'application/json' }
 ): Promise<TRes> => {
+  const isFormData = body instanceof FormData;
   const response = await fetch(url, {
     method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
+    headers: isFormData ? {} : headers,
+    body: isFormData ? body : JSON.stringify(body),
   });
 
   if (!response.ok) {

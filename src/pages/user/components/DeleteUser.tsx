@@ -3,7 +3,7 @@ import Alert from '@/components/Alert';
 import { showToast } from '@/components/Toast';
 import { useState } from 'react';
 
-const DeleteUser = ({ id, onClick }: { id: string; onClick: () => void }) => {
+const DeleteUser = ({ id, user, onClick }: { id: string; user: string; onClick: () => void }) => {
   const [openAlter, setOpenAlter] = useState<boolean>(false);
   const { mutate: deleteUser } = useDeleteUserMutation();
   const onSubmit = (id: string) => {
@@ -23,7 +23,12 @@ const DeleteUser = ({ id, onClick }: { id: string; onClick: () => void }) => {
   };
   return (
     <Alert
-      description="Are you sure you want to delete this user?"
+      description={
+        <>
+          Are you sure you want to delete this user:
+          <span className="font-bold"> {user}?</span>
+        </>
+      }
       variantTile="destructive"
       variantSubmit="destructive"
       onClick={() => onSubmit(id)}

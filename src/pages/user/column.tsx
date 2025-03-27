@@ -58,8 +58,10 @@ export const userColumns: ColumnDef<IUser>[] = [
     size: 270,
     cell: function Actions({ row }) {
       const [id, setId] = useState('');
+      const [user, setUser] = useState('');
       const handleSetSelect = () => {
         setId(row.original._id);
+        setUser(row.original.username);
       };
       return (
         <div className="flex items-center justify-center gap-2">
@@ -69,6 +71,7 @@ export const userColumns: ColumnDef<IUser>[] = [
           />
           <DeleteUser
             id={id}
+            user={user}
             onClick={handleSetSelect}
           />
         </div>

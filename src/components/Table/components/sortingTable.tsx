@@ -6,10 +6,10 @@ const SortingColumn = ({ column, label }: { column: Column<any, unknown>; label:
     <div className="flex justify-center">
       <button
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        className="flex items-center justify-center gap-1"
+        className="flex items-center justify-center gap-1 cursor-pointer"
       >
         {label}
-        <div>
+        <div className="">
           {column.getIsSorted() === 'asc' ? (
             <FaArrowUp
               width={3}

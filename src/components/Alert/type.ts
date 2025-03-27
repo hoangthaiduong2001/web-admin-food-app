@@ -4,7 +4,7 @@ import { variantButton } from '../Button/type';
 export interface IAlter {
   titleAlter: string;
   titleButton: string | ReactNode;
-  description: string;
+  description: string | ReactNode;
   variantTile?: variantButton;
   variantSubmit?: variantButton;
   classNameButton?: string;
