@@ -17,7 +17,8 @@ const AddUser = () => {
   });
   const { handleSubmit, reset } = form;
   const onSubmit = handleSubmit((data) => {
-    createUser(data, {
+    const userData = { ...data, password: data.password || '' };
+    createUser(userData, {
       onSuccess: (data) => {
         showToast({ message: data.message, type: 'success' });
         setOpenDialog(false);

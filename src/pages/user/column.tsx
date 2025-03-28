@@ -4,12 +4,13 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useState } from 'react';
 import DeleteUser from './components/DeleteUser';
 import EditUser from './components/EditUser';
+import { defaultValueUser } from './const';
 
 export const userColumns: ColumnDef<IUser>[] = [
   {
     accessorKey: '_id',
     header: 'ID',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('_id')}</div>,
+    cell: ({ row }) => <div>{row.getValue('_id')}</div>,
   },
   {
     accessorKey: 'username',
@@ -19,7 +20,7 @@ export const userColumns: ColumnDef<IUser>[] = [
         label="Username"
       />
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue('username')}</div>,
+    cell: ({ row }) => <div>{row.getValue('username')}</div>,
   },
   {
     accessorKey: 'address',
@@ -29,7 +30,7 @@ export const userColumns: ColumnDef<IUser>[] = [
         label="Address"
       />
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue('address')}</div>,
+    cell: ({ row }) => <div>{row.getValue('address')}</div>,
   },
   {
     accessorKey: 'phone',
@@ -39,7 +40,7 @@ export const userColumns: ColumnDef<IUser>[] = [
         label="Phone"
       />
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue('phone')}</div>,
+    cell: ({ row }) => <div>{row.getValue('phone')}</div>,
   },
   {
     accessorKey: 'email',
@@ -49,7 +50,7 @@ export const userColumns: ColumnDef<IUser>[] = [
         label="Email"
       />
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue('email')}</div>,
+    cell: ({ row }) => <div>{row.getValue('email')}</div>,
   },
   {
     id: 'actions',
@@ -57,20 +58,17 @@ export const userColumns: ColumnDef<IUser>[] = [
     header: 'Action',
     size: 270,
     cell: function Actions({ row }) {
-      const [id, setId] = useState('');
-      const [user, setUser] = useState('');
+      const [user, setUser] = useState<IUser>(defaultValueUser);
       const handleSetSelect = () => {
-        setId(row.original._id);
-        setUser(row.original.username);
+        setUser(row.original);
       };
       return (
         <div className="flex items-center justify-center gap-2">
           <EditUser
-            id={id}
+            user={user}
             onClick={handleSetSelect}
           />
           <DeleteUser
-            id={id}
             user={user}
             onClick={handleSetSelect}
           />

@@ -1,16 +1,18 @@
 import Avatar from '@/components/Avatar';
-import { Button } from '@/components/Button';
 import SortingColumn from '@/components/Table/components/sortingTable';
 import { IProduct } from '@/types/product';
 
 import { ColumnDef } from '@tanstack/react-table';
 import { useState } from 'react';
+import DeleteProduct from './components/DeleteProduct';
+import EditProduct from './components/EditProduct';
+import { defaultValueProduct } from './const';
 
 export const productColumns: ColumnDef<IProduct>[] = [
   {
     accessorKey: '_id',
     header: 'ID',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('_id')}</div>,
+    cell: ({ row }) => <div>{row.getValue('_id')}</div>,
   },
   {
     accessorKey: 'img',
@@ -29,7 +31,7 @@ export const productColumns: ColumnDef<IProduct>[] = [
         label="Title"
       />
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue('title')}</div>,
+    cell: ({ row }) => <div>{row.getValue('title')}</div>,
   },
   {
     accessorKey: 'price',
@@ -39,7 +41,8 @@ export const productColumns: ColumnDef<IProduct>[] = [
         label="Price"
       />
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue('price')}</div>,
+    accessorFn: (row) => String(row.price),
+    cell: ({ row }) => <div>{String(row.getValue('price'))}</div>,
   },
   {
     accessorKey: 'discount',
@@ -49,12 +52,13 @@ export const productColumns: ColumnDef<IProduct>[] = [
         label="Discount"
       />
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue('discount')}</div>,
+    accessorFn: (row) => String(row.discount),
+    cell: ({ row }) => <div>{String(row.getValue('discount'))}</div>,
   },
   {
     accessorKey: 'desc',
     header: 'Description',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('desc')}</div>,
+    cell: ({ row }) => <div>{row.getValue('desc')}</div>,
   },
   {
     id: 'actions',
@@ -62,16 +66,20 @@ export const productColumns: ColumnDef<IProduct>[] = [
     header: 'Action',
     size: 270,
     cell: function Actions({ row }) {
-      const [id, setId] = useState('');
-      const [user, setUser] = useState('');
+      const [product, setProduct] = useState<IProduct>(defaultValueProduct);
       const handleSetSelect = () => {
-        setId(row.original._id);
-        setUser(row.original.title);
+        setProduct(row.original);
       };
       return (
         <div className="flex items-center justify-center gap-2">
-          <Button>Edit</Button>
-          <Button>Delete</Button>
+          <EditProduct
+            product={product}
+            onClick={handleSetSelect}
+          />
+          <DeleteProduct
+            product={product}
+            onClick={handleSetSelect}
+          />
         </div>
       );
     },

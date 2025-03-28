@@ -1,30 +1,30 @@
-import { useGetUserById, useUpdateUserMutation } from '@/apis/hooks/user';
+import { useUpdateUserMutation } from '@/apis/hooks/user';
 import Dialog from '@/components/Dialog';
 import { showToast } from '@/components/Toast';
+import { IUser } from '@/types/user';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { UserSchema, UserSchemaType } from '../schema';
 import FormUser from './form';
 
-const EditUser = ({ id, onClick }: { id: string; onClick: () => void }) => {
+const EditUser = ({ user, onClick }: { user: IUser; onClick: () => void }) => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const { mutate: updateUser } = useUpdateUserMutation({ id });
-  const { data } = useGetUserById({ id });
+  const { mutate: updateUser } = useUpdateUserMutation({ id: user._id });
   const form = useForm<UserSchemaType>({
     resolver: yupResolver(UserSchema),
     values: {
-      username: data?.data?.username || '',
-      address: data?.data?.address || '',
-      email: data?.data?.email || '',
-      password: data?.data?.password || '',
-      phone: data?.data?.phone || '',
+      username: user.username || '',
+      address: user.address || '',
+      email: user.email || '',
+      phone: user.phone || '',
     },
   });
   const { handleSubmit, reset } = form;
   const onSubmit = handleSubmit((data) => {
-    if (id) {
-      updateUser(data, {
+    if (user._id) {
+      const userData = { ...data, password: data.password || '' };
+      updateUser(userData, {
         onSuccess: (data) => {
           showToast({ message: data.message, type: 'success' });
           setOpenDialog(false);
@@ -51,7 +51,7 @@ const EditUser = ({ id, onClick }: { id: string; onClick: () => void }) => {
       size="xxl"
       children={
         <FormUser
-          id={id}
+          user={user}
           form={form}
           onSubmit={onSubmit}
         />

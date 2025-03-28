@@ -37,6 +37,7 @@ const Sidebar = forwardRef<
         {...props}
       >
         <SheetContent
+          onOpenAutoFocus={(e) => e.preventDefault()}
           data-sidebar="sidebar"
           data-mobile="true"
           className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
