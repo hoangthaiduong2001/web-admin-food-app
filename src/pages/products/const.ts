@@ -1,4 +1,5 @@
 import { ItemSelect } from '@/components/Select/type';
+import { IProduct } from '@/types/product';
 import { ProductSchemaType } from './schema';
 
 export const filterProductTable: ItemSelect[] = [
@@ -25,4 +26,15 @@ export const defaultCreateProduct: ProductSchemaType = {
   price: 0,
   discount: 0,
   desc: '',
+};
+
+export const defaultValueProduct: IProduct = {
+  _id: '',
+  category: [],
+  desc: '',
+  discount: 0,
+  img: '',
+  price: 0,
+  reviews: [],
+  title: '',
 };

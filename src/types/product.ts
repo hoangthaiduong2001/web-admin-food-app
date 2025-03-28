@@ -23,6 +23,10 @@ export interface ProductBodyType {
 }
 
 export interface ProductResType {
+  data: IProduct;
   message: string;
-  data: IProduct[];
+}
+
+export interface DeleteProductResType {
+  message: string;
 }

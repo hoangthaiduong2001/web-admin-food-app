@@ -5,7 +5,7 @@ export const UserSchema = object({
   address: string().required('Address is required'),
   phone: string().required('Phone number is required'),
   email: string().email('Email is invalid').required('Email is required'),
-  password: string().min(6, 'Password min 6 character').required('Password is required'),
+  password: string().min(6, 'Password min 6 character').required('Password is required').optional(),
 });
 
 export type UserSchemaType = InferType<typeof UserSchema>;

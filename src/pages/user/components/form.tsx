@@ -2,7 +2,7 @@ import Input from '@/components/Input';
 import { Controller } from 'react-hook-form';
 import { TFormInstanceUser } from '../type';
 
-const FormUser = ({ id, form, onSubmit }: TFormInstanceUser) => {
+const FormUser = ({ user, form, onSubmit }: TFormInstanceUser) => {
   const { control } = form;
   return (
     <div className="sm:w-10/12 md:w-8/12 lg:w-10/12 xl:w-full text-center">
@@ -21,7 +21,7 @@ const FormUser = ({ id, form, onSubmit }: TFormInstanceUser) => {
             />
           )}
         />
-        {!id && (
+        {!user?._id && (
           <Controller
             name="password"
             control={control}

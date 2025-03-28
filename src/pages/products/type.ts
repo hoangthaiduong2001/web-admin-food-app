@@ -4,7 +4,7 @@ import { ProductSchemaType } from './schema';
 
 export type TFormInstanceProduct = {
   setFile: (file: File | null) => void;
-  id?: string;
+  img?: string;
   form: UseFormReturn<ProductSchemaType>;
   onSubmit: (e?: BaseSyntheticEvent) => Promise<void>;
 };

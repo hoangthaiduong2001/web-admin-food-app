@@ -4,9 +4,9 @@ import Avatar from '../Avatar';
 import Input from '../Input';
 import { showToast } from '../Toast';
 
-const InputFile = ({ onChange }: { onChange: (file: File | null) => void }) => {
+const InputFile = ({ img, onChange }: { img: string; onChange: (file: File | null) => void }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(img);
   const handleFileChange = (file: File) => {
     if (!file) return;
     if (!file.type.match('image/png|image/jpeg|image/jpg|image/gif|image/svg+xml')) {
@@ -16,12 +16,15 @@ const InputFile = ({ onChange }: { onChange: (file: File | null) => void }) => {
     onChange(file);
     setPreview(URL.createObjectURL(file));
   };
+
   const handleClear = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+    onChange(null);
     setPreview(null);
   };
+
   return (
     <div className="flex items-center space-x-2">
       {preview ? (

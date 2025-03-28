@@ -1,12 +1,12 @@
-import { useDeleteUserMutation } from '@/apis/hooks/user';
+import { useDeleteProductMutation } from '@/apis/hooks/product';
 import Alert from '@/components/Alert';
 import { showToast } from '@/components/Toast';
-import { IUser } from '@/types/user';
+import { IProduct } from '@/types/product';
 import { useState } from 'react';
 
-const DeleteUser = ({ user, onClick }: { user: IUser; onClick: () => void }) => {
+const DeleteProduct = ({ product, onClick }: { product: IProduct; onClick: () => void }) => {
   const [openAlter, setOpenAlter] = useState<boolean>(false);
-  const { mutate: deleteUser } = useDeleteUserMutation();
+  const { mutate: deleteUser } = useDeleteProductMutation();
   const onSubmit = (id: string) => {
     if (id) {
       deleteUser(id, {
@@ -26,22 +26,22 @@ const DeleteUser = ({ user, onClick }: { user: IUser; onClick: () => void }) => 
     <Alert
       description={
         <>
-          Are you sure you want to delete this user:
-          <span className="font-bold"> {user.username}?</span>
+          Are you sure you want to delete this product:
+          <span className="font-bold"> {product.title}?</span>
         </>
       }
       variantTile="destructive"
       variantSubmit="destructive"
-      onClick={() => onSubmit(user._id)}
+      onClick={() => onSubmit(product._id)}
       open={openAlter}
       setOpen={() => {
         setOpenAlter((prev) => !prev);
         onClick();
       }}
-      titleAlter="Delete user"
+      titleAlter="Delete product"
       titleButton="Delete"
     />
   );
 };
 
-export default DeleteUser;
+export default DeleteProduct;

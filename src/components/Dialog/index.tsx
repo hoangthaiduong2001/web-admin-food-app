@@ -29,7 +29,10 @@ const Dialog = ({
       <Trigger asChild>
         <Button variant={variantButton}>{titleButton}</Button>
       </Trigger>
-      <DialogContent className={cn(sizeComponent[size], 'z-50 bg-white')}>
+      <DialogContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className={cn(sizeComponent[size], 'z-50 bg-white')}
+      >
         <DialogHeader>
           <DialogTitle>{titleDialog}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
