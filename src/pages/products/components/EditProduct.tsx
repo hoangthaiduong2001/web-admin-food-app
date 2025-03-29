@@ -24,7 +24,6 @@ const EditProduct = ({ product, onClick }: { product: IProduct; onClick: () => v
       desc: product.desc || '',
     },
   });
-  console.log('file', file);
   const { handleSubmit, reset } = form;
   const onSubmit = handleSubmit((data) => {
     if (product._id) {

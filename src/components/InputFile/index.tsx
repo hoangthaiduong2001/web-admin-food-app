@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { MdClear } from 'react-icons/md';
 import Avatar from '../Avatar';
 import Input from '../Input';
 import { showToast } from '../Toast';
@@ -29,11 +28,9 @@ const InputFile = ({ img, onChange }: { img: string; onChange: (file: File | nul
     <div className="flex items-center space-x-2">
       {preview ? (
         <div className="relative">
-          <Avatar url={preview} />
-          <MdClear
-            size={16}
-            className="absolute top-0 right-0 bg-black text-white rounded-full p-0.5 m-2 text-2xl cursor-pointer"
-            onClick={handleClear}
+          <Avatar
+            url={preview}
+            onClick={() => fileInputRef.current?.click()}
           />
         </div>
       ) : (
@@ -49,6 +46,17 @@ const InputFile = ({ img, onChange }: { img: string; onChange: (file: File | nul
           }}
         />
       )}
+      <Input
+        ref={fileInputRef}
+        type="file"
+        className="hidden"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) {
+            handleFileChange(file);
+          }
+        }}
+      />
     </div>
   );
 };
