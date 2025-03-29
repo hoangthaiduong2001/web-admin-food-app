@@ -23,9 +23,8 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Input from '../Input';
 import PaginationTable from '../Pagination';
-import TableSkeleton from '../Skeleton';
-
 import Select from '../Select';
+import TableSkeleton from '../Skeleton';
 import { PAGE_SIZE } from './const';
 import { TTableProps } from './type';
 
@@ -73,6 +72,10 @@ const Table = <TRowDataType extends IPlainObject>({
       pagination,
     },
   });
+
+  useEffect(() => {
+    setPagination((prev) => ({ ...prev, pageIndex }));
+  }, [columnFilters]);
 
   useEffect(() => {
     table.setPagination({
