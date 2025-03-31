@@ -20,6 +20,7 @@ const Dialog = ({
   children,
   size = 'md',
   variantButton = 'outline',
+  showButtonSubmit = true,
 }: IDialog) => {
   return (
     <DialogCore
@@ -42,13 +43,15 @@ const Dialog = ({
           <Close asChild>
             <Button variant="outline">Close</Button>
           </Close>
-          <Button
-            type="submit"
-            variant="contained"
-            onClick={onClick}
-          >
-            Submit
-          </Button>
+          {showButtonSubmit && (
+            <Button
+              type="submit"
+              variant="contained"
+              onClick={onClick}
+            >
+              Submit
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </DialogCore>

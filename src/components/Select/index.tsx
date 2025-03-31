@@ -5,10 +5,11 @@ import SelectItem from './components/SelectItem';
 import SelectTrigger from './components/SelectTrigger';
 import { ISelect } from './type';
 
-const Select = ({ items, onChange, value, placeholder, className }: ISelect) => {
+const Select = ({ items, onChange, value, placeholder, className, label }: ISelect) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <div className={className}>
+      <p className="flex font-semibold">{label}</p>
       <Root
         onOpenChange={setOpen}
         onValueChange={onChange}
