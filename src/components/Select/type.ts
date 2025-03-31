@@ -4,6 +4,7 @@ export interface ItemSelect {
 }
 
 export interface ISelect {
+  label?: string;
   items: ItemSelect[];
   placeholder: string;
   value: string;

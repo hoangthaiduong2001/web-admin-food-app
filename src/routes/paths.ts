@@ -4,5 +4,6 @@ export const paths = {
   dashboard: '/dashboard',
   user: '/user',
   product: '/product',
+  cart: '/cart',
   pageNotFound: '/404',
 };

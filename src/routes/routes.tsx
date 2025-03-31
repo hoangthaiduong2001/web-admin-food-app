@@ -1,7 +1,7 @@
 import { AiFillProduct } from 'react-icons/ai';
-import { FaHome, FaUserEdit } from 'react-icons/fa';
+import { FaHome, FaShoppingCart, FaUserEdit } from 'react-icons/fa';
 import { RouteItem } from '../types/route';
-import { DashboardPage, ProductPage, UserPage } from './lazyLoad';
+import { CartPage, DashboardPage, ProductPage, UserPage } from './lazyLoad';
 import { paths } from './paths';
 
 export const routes: RouteItem[] = [
@@ -22,5 +22,11 @@ export const routes: RouteItem[] = [
     title: 'Product',
     element: <ProductPage />,
     icon: <AiFillProduct />,
+  },
+  {
+    path: paths.cart,
+    title: 'Cart',
+    element: <CartPage />,
+    icon: <FaShoppingCart />,
   },
 ];
