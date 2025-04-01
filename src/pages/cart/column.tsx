@@ -4,6 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import Avatar from '@/components/Avatar';
 import { ICart, ProductCart } from '@/types/cart';
 import { useState } from 'react';
+import DeleteCart from './components/deleteCart';
 import DetailCart from './components/detailCart';
 import EditCart from './components/editCart';
 import { initialValueCart, initialValueCartProduct } from './const';
@@ -58,10 +59,10 @@ export const cartColumns: ColumnDef<ICart>[] = [
             cart={cart}
             onClick={handleSetSelect}
           />
-          {/*  <DeleteUser
-            user={user}
+          <DeleteCart
+            cart={cart}
             onClick={handleSetSelect}
-          /> */}
+          />
         </div>
       );
     },
