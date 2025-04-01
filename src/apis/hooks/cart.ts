@@ -1,9 +1,7 @@
-import { CartByIdResType, CartResType, EditCartBodyType, EditCartResType } from '@/types/cart';
+import { CartByIdResType, CartResType, DeleteCartResType, EditCartBodyType, EditCartResType } from '@/types/cart';
 import { ErrorType } from '@/types/error';
-import { DeleteUserResType, UserBodyType, UserResType } from '@/types/user';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { editCart, getAllCart, getCartById } from '../api/cart';
-import { createUser, deleteUser } from '../api/user';
+import { deleteCart, editCart, getAllCart, getCartById } from '../api/cart';
 
 export const useGetAllCart = () => {
   return useQuery<CartResType, ErrorType>({
@@ -21,16 +19,6 @@ export const useGetCartById = ({ id }: { id: string }) => {
   });
 };
 
-export const useCreateUserMutation = () => {
-  const queryClient = useQueryClient();
-  return useMutation<UserResType, ErrorType, UserBodyType>({
-    mutationFn: createUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['get-all-user'] });
-    },
-  });
-};
-
 export const useUpdateCartMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<EditCartResType, ErrorType, EditCartBodyType>({
@@ -41,12 +29,12 @@ export const useUpdateCartMutation = () => {
   });
 };
 
-export const useDeleteUserMutation = () => {
+export const useDeleteCartMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation<DeleteUserResType, ErrorType, string>({
-    mutationFn: (id: string) => deleteUser(id),
+  return useMutation<DeleteCartResType, ErrorType, string>({
+    mutationFn: (id: string) => deleteCart(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['get-all-user'], exact: true });
+      queryClient.invalidateQueries({ queryKey: ['get-all-cart'], exact: true });
     },
   });
 };

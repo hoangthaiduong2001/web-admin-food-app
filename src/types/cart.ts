@@ -32,3 +32,7 @@ export interface EditCartBodyType {
 export interface EditCartResType {
   message: string;
 }
+
+export interface DeleteCartResType {
+  message: string;
+}
