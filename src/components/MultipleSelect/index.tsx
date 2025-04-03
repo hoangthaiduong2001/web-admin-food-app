@@ -15,7 +15,7 @@ import { IoClose } from 'react-icons/io5';
 import { Badge } from '../Badge';
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '../Command';
 import { GroupOption, MultipleSelectorProps, MultipleSelectorRef, Option } from './type';
-import { isOptionsExist, removePickedOption, transToGroupOption, useDebounce } from './utils';
+import { removePickedOption, transToGroupOption, useDebounce } from './utils';
 
 const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
   (
@@ -32,16 +32,14 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
       emptyIndicator,
       maxSelected = Number.MAX_SAFE_INTEGER,
       onMaxSelected,
-      hidePlaceholderWhenSelected,
       disabled,
       groupBy,
       className,
       badgeClassName,
-      selectFirstItem = true,
-      creatable = false,
       triggerSearchOnFocus = false,
       commandProps,
       inputProps,
+      label,
       hideClearAllButton = false,
     }: MultipleSelectorProps,
     ref: Ref<MultipleSelectorRef>
@@ -51,7 +49,6 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
     const [onScrollbar, setOnScrollbar] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-
     const [selected, setSelected] = useState<Option[]>(value || []);
     const [options, setOptions] = useState<GroupOption>(transToGroupOption(arrayDefaultOptions, groupBy));
     const [inputValue, setInputValue] = useState('');
@@ -132,7 +129,6 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
     }, [value]);
 
     useEffect(() => {
-      /** If `onSearch` is provided, do not trigger options updated. */
       if (!arrayOptions || onSearch) {
         return;
       }
@@ -143,8 +139,6 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
     }, [arrayDefaultOptions, arrayOptions, groupBy, onSearch, options]);
 
     useEffect(() => {
-      /** sync search */
-
       const doSearchSync = () => {
         const res = onSearchSync?.(debouncedSearchTerm);
         setOptions(transToGroupOption(res || [], groupBy));
@@ -190,56 +184,10 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus]);
 
-    const CreatableItem = () => {
-      if (!creatable) return undefined;
-      if (
-        isOptionsExist(options, [{ value: inputValue, label: inputValue }]) ||
-        selected.find((s) => s.value === inputValue)
-      ) {
-        return undefined;
-      }
-
-      const Item = (
-        <CommandItem
-          value={inputValue}
-          className="cursor-pointer"
-          onMouseDown={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-          }}
-          onSelect={(value: string) => {
-            if (selected.length >= maxSelected) {
-              onMaxSelected?.(selected.length);
-              return;
-            }
-            setInputValue('');
-            const newOptions = [...selected, { value, label: value }];
-            setSelected(newOptions);
-            onChange?.(newOptions);
-          }}
-        >
-          {`Create "${inputValue}"`}
-        </CommandItem>
-      );
-
-      // For normal creatable
-      if (!onSearch && inputValue.length > 0) {
-        return Item;
-      }
-
-      // For async search creatable. avoid showing creatable item before loading at first.
-      if (onSearch && debouncedSearchTerm.length > 0 && !isLoading) {
-        return Item;
-      }
-
-      return undefined;
-    };
-
     const EmptyItem = useCallback(() => {
       if (!emptyIndicator) return undefined;
 
-      // For async search that showing emptyIndicator
-      if (onSearch && !creatable && Object.keys(options).length === 0) {
+      if (onSearch && Object.keys(options).length === 0) {
         return (
           <CommandItem
             value="-"
@@ -251,24 +199,17 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
       }
 
       return <CommandEmpty>{emptyIndicator}</CommandEmpty>;
-    }, [creatable, emptyIndicator, onSearch, options]);
+    }, [emptyIndicator, onSearch, options]);
 
     const selectables = useMemo<GroupOption>(() => removePickedOption(options, selected), [options, selected]);
 
-    /** Avoid Creatable Selector freezing or lagging when paste a long string. */
     const commandFilter = useCallback(() => {
       if (commandProps?.filter) {
         return commandProps.filter;
       }
 
-      if (creatable) {
-        return (value: string, search: string) => {
-          return value.toLowerCase().includes(search.toLowerCase()) ? 1 : -1;
-        };
-      }
-      // Using default filter in `cmdk`. We don't have to provide it.
       return undefined;
-    }, [creatable, commandProps?.filter]);
+    }, [commandProps?.filter]);
 
     return (
       <Command
@@ -278,13 +219,14 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
           handleKeyDown(e);
           commandProps?.onKeyDown?.(e);
         }}
-        className={cn('h-auto overflow-visible bg-transparent', commandProps?.className)}
-        shouldFilter={commandProps?.shouldFilter !== undefined ? commandProps.shouldFilter : !onSearch} // When onSearch is provided, we don't want to filter the options. You can still override it.
+        className={cn('h-auto overflow-visible bg-transparent mb-[50px]', commandProps?.className)}
+        shouldFilter={commandProps?.shouldFilter !== undefined ? commandProps.shouldFilter : !onSearch}
         filter={commandFilter()}
       >
+        <div className="flex font-semibold pb-1">{label}</div>
         <div
           className={cn(
-            'min-h-10 rounded-md border border-input text-base md:text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+            'min-h-10 rounded-md border border-input text-base md:text-sm focus-within:ring-1',
             {
               'px-3 py-2': selected.length !== 0,
               'cursor-text': !disabled && selected.length !== 0,
@@ -326,12 +268,12 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
                     }}
                     onClick={() => handleUnselect(option)}
                   >
-                    <IoClose className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                    <IoClose className="h-3 w-3 text-muted-foreground hover:text-foreground cursor-pointer" />
                   </button>
                 </Badge>
               );
             })}
-            {/* Avoid having the "Search" Icon */}
+
             <CommandPrimitive.Input
               {...inputProps}
               ref={inputRef}
@@ -351,11 +293,10 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
                 setOpen(true);
                 inputProps?.onFocus?.(event);
               }}
-              placeholder={hidePlaceholderWhenSelected && selected.length !== 0 ? '' : placeholder}
+              placeholder={selected.length !== 0 ? '' : placeholder}
               className={cn(
-                'flex-1 bg-transparent outline-none placeholder:text-muted-foreground',
+                'flex-1 bg-transparent outline-none placeholder:text-muted-foreground hover:ring-offset-2',
                 {
-                  'w-full': hidePlaceholderWhenSelected,
                   'px-3 py-2': selected.length === 0,
                   'ml-1': selected.length !== 0,
                 },
@@ -369,7 +310,7 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
                 onChange?.(selected.filter((s) => s.fixed));
               }}
               className={cn(
-                'absolute right-0 h-6 w-6 p-0',
+                'absolute right-0 p-0 cursor-pointer',
                 (hideClearAllButton ||
                   disabled ||
                   selected.length < 1 ||
@@ -377,14 +318,14 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
                   'hidden'
               )}
             >
-              <IoClose />
+              <IoClose size={20} />
             </button>
           </div>
         </div>
         <div className="relative">
           {open && (
             <CommandList
-              className="absolute top-1 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in"
+              className="absolute top-1 z-10 w-full rounded-md border shadow-md overflow-y-scroll scrollbar-hide bg-white"
               onMouseLeave={() => {
                 setOnScrollbar(false);
               }}
@@ -400,18 +341,11 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
               ) : (
                 <>
                   {EmptyItem()}
-                  {CreatableItem()}
-                  {!selectFirstItem && (
-                    <CommandItem
-                      value="-"
-                      className="hidden"
-                    />
-                  )}
                   {Object.entries(selectables).map(([key, dropdowns]) => (
                     <CommandGroup
                       key={key}
                       heading={key}
-                      className="h-full overflow-auto"
+                      className="h-[15vh] overflow-auto p-0"
                     >
                       <>
                         {dropdowns.map((option) => {
@@ -434,7 +368,10 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
                                 setSelected(newOptions);
                                 onChange?.(newOptions);
                               }}
-                              className={cn('cursor-pointer', option.disable && 'cursor-default text-muted-foreground')}
+                              className={cn(
+                                'cursor-pointer hover:bg-neutral-200',
+                                option.disable && 'cursor-default text-muted-foreground '
+                              )}
                             >
                               {option.label}
                             </CommandItem>

@@ -21,6 +21,7 @@ const Dialog = ({
   size = 'md',
   variantButton = 'outline',
   showButtonSubmit = true,
+  className,
 }: IDialog) => {
   return (
     <DialogCore
@@ -32,7 +33,7 @@ const Dialog = ({
       </Trigger>
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className={cn(sizeComponent[size], 'z-50 bg-white')}
+        className={cn(sizeComponent[size], className, 'z-50 bg-white')}
       >
         <DialogHeader>
           <DialogTitle>{titleDialog}</DialogTitle>

@@ -16,6 +16,7 @@ export interface GroupOption {
 
 export interface MultipleSelectorProps {
   value?: Option[];
+  label?: string;
   defaultOptions?: Option[];
   options?: Option[];
   placeholder?: string;
@@ -28,13 +29,10 @@ export interface MultipleSelectorProps {
   onChange?: (options: Option[]) => void;
   maxSelected?: number;
   onMaxSelected?: (maxLimit: number) => void;
-  hidePlaceholderWhenSelected?: boolean;
   disabled?: boolean;
   groupBy?: string;
   className?: string;
   badgeClassName?: string;
-  selectFirstItem?: boolean;
-  creatable?: boolean;
   commandProps?: ComponentPropsWithoutRef<typeof Command>;
   inputProps?: Omit<ComponentPropsWithoutRef<typeof CommandPrimitive.Input>, 'value' | 'placeholder' | 'disabled'>;
   hideClearAllButton?: boolean;

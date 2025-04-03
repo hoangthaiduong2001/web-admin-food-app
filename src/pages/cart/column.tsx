@@ -97,7 +97,7 @@ export const cartByIdColumns: ColumnDef<ProductCart>[] = [
         label="Quantity"
       />
     ),
-    accessorFn: (row) => String(row.productName),
+    accessorFn: (row) => String(row.quantity),
     cell: ({ row }) => <div>{String(row.getValue('quantity'))}</div>,
   },
   {
@@ -108,7 +108,7 @@ export const cartByIdColumns: ColumnDef<ProductCart>[] = [
         label="Total price"
       />
     ),
-    accessorFn: (row) => String(row.productName),
+    accessorFn: (row) => String(row.totalPrice),
     cell: ({ row }) => <div>{String(row.getValue('totalPrice'))}</div>,
   },
 ];

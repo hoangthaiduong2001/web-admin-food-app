@@ -13,4 +13,5 @@ export interface IDialog {
   open: boolean;
   setOpen: (value: boolean) => void;
   onClick?: () => void;
+  className?: string;
 }
