@@ -64,10 +64,10 @@ export const useDeleteCategoriesMutation = () => {
   });
 };
 
-export const useDeleteCategoriesDetailMutation = ({ productId }: { productId: string }) => {
+export const useDeleteCategoriesDetailMutation = ({ categoriesId }: { categoriesId: string }) => {
   const queryClient = useQueryClient();
   return useMutation<DeleteCategoriesResType, ErrorType, string>({
-    mutationFn: (categoriesId: string) => deleteCategoriesDetail(categoriesId, productId),
+    mutationFn: (productId: string) => deleteCategoriesDetail(categoriesId, productId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['get-all-categories'], exact: true });
     },

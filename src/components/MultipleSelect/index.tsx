@@ -39,6 +39,7 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
       triggerSearchOnFocus = false,
       commandProps,
       inputProps,
+      label,
       hideClearAllButton = false,
     }: MultipleSelectorProps,
     ref: Ref<MultipleSelectorRef>
@@ -218,10 +219,11 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
           handleKeyDown(e);
           commandProps?.onKeyDown?.(e);
         }}
-        className={cn('h-auto overflow-visible bg-transparent', commandProps?.className)}
+        className={cn('h-auto overflow-visible bg-transparent mb-[50px]', commandProps?.className)}
         shouldFilter={commandProps?.shouldFilter !== undefined ? commandProps.shouldFilter : !onSearch}
         filter={commandFilter()}
       >
+        <div className="flex font-semibold pb-1">{label}</div>
         <div
           className={cn(
             'min-h-10 rounded-md border border-input text-base md:text-sm focus-within:ring-1',
@@ -323,7 +325,7 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
         <div className="relative">
           {open && (
             <CommandList
-              className="absolute top-1 z-10 w-full rounded-md border shadow-md overflow-y-scroll scrollbar-hide"
+              className="absolute top-1 z-10 w-full rounded-md border shadow-md overflow-y-scroll scrollbar-hide bg-white"
               onMouseLeave={() => {
                 setOnScrollbar(false);
               }}
@@ -343,7 +345,7 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
                     <CommandGroup
                       key={key}
                       heading={key}
-                      className="h-full overflow-auto p-0"
+                      className="h-[15vh] overflow-auto p-0"
                     >
                       <>
                         {dropdowns.map((option) => {

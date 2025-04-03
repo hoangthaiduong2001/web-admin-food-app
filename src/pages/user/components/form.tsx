@@ -63,14 +63,6 @@ const FormUser = ({ user, form, onSubmit }: TFormInstanceUser) => {
                 let value = e.target.value.replace(/\D/g, '');
                 onChange(value);
               }}
-              // onChange={(e) => {
-              //   let value = e.target.value;
-              //   const numberValue = Number(value);
-              //   if (isNaN(numberValue)) {
-              //     return;
-              //   }
-              //   onChange(numberValue);
-              // }}
               label="Phone"
               placeholder="Input phone"
               required

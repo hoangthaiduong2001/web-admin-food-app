@@ -16,6 +16,7 @@ export interface GroupOption {
 
 export interface MultipleSelectorProps {
   value?: Option[];
+  label?: string;
   defaultOptions?: Option[];
   options?: Option[];
   placeholder?: string;

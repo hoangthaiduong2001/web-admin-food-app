@@ -25,8 +25,8 @@ export interface CategoriesResType {
 export interface CreateCategoriesBodyType {
   name: string;
   products: {
-    product: string[];
-  };
+    product: string;
+  }[];
 }
 
 export interface CreateCategoriesResType {
