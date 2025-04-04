@@ -6,5 +6,6 @@ export const paths = {
   product: '/product',
   cart: '/cart',
   categories: '/categories',
+  review: '/review',
   pageNotFound: '/404',
 };
