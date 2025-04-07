@@ -1,8 +1,8 @@
 import { AiFillProduct } from 'react-icons/ai';
 import { FaHome, FaShoppingCart, FaUserEdit } from 'react-icons/fa';
-import { MdCategory, MdOutlineRateReview } from 'react-icons/md';
+import { MdCategory, MdOutlinePayment, MdOutlineRateReview } from 'react-icons/md';
 import { RouteItem } from '../types/route';
-import { CartPage, CategoriesPage, DashboardPage, ProductPage, ReviewPage, UserPage } from './lazyLoad';
+import { CartPage, CategoriesPage, DashboardPage, OrderPage, ProductPage, ReviewPage, UserPage } from './lazyLoad';
 import { paths } from './paths';
 
 export const routes: RouteItem[] = [
@@ -41,5 +41,11 @@ export const routes: RouteItem[] = [
     title: 'Review',
     element: <ReviewPage />,
     icon: <MdOutlineRateReview />,
+  },
+  {
+    path: paths.order,
+    title: 'Order',
+    element: <OrderPage />,
+    icon: <MdOutlinePayment />,
   },
 ];
