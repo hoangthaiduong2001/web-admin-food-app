@@ -10,4 +10,5 @@ export interface ISelect {
   value: string;
   onChange: (value: string) => void;
   className?: string;
+  classNameContent?: string;
 }

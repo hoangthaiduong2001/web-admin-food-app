@@ -3,7 +3,6 @@ import SortingColumn from '@/components/Table/components/sortingTable';
 import { ICategoriesResType, IListProductCategories, IProductCategories } from '@/types/categories';
 import { ColumnDef } from '@tanstack/react-table';
 import { useState } from 'react';
-
 import DeleteCategories from './components/deleteCategories';
 import DeleteDetailCategories from './components/deleteDetailCategories';
 import DetailCategories from './components/detailCategories';

@@ -2,6 +2,16 @@ export enum UserRole {
   Admin = 'admin',
   User = 'user',
 }
+
+export enum StatusOrder {
+  Waiting = 'waiting',
+  Delivered = 'delivered',
+}
+
+export enum PaymentOrder {
+  Paid = 'paid',
+  Unpaid = 'unpaid',
+}
 export interface IPlainObject {
   [key: string]: any;
 }

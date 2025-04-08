@@ -219,7 +219,7 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
           handleKeyDown(e);
           commandProps?.onKeyDown?.(e);
         }}
-        className={cn('h-auto overflow-visible bg-transparent mb-[50px]', commandProps?.className)}
+        className={cn('h-auto overflow-visible bg-transparent mb-[30px]', commandProps?.className)}
         shouldFilter={commandProps?.shouldFilter !== undefined ? commandProps.shouldFilter : !onSearch}
         filter={commandFilter()}
       >
@@ -235,7 +235,7 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
           )}
           onClick={() => {
             if (disabled) return;
-            inputRef?.current?.focus();
+            // inputRef?.current?.focus();
           }}
         >
           <div className="relative flex flex-wrap gap-1">
@@ -266,7 +266,10 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
                       e.preventDefault();
                       e.stopPropagation();
                     }}
-                    onClick={() => handleUnselect(option)}
+                    onClick={() => {
+                      handleUnselect(option);
+                      document.addEventListener('mousedown', handleClickOutside);
+                    }}
                   >
                     <IoClose className="h-3 w-3 text-muted-foreground hover:text-foreground cursor-pointer" />
                   </button>
@@ -308,6 +311,7 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
               onClick={() => {
                 setSelected(selected.filter((s) => s.fixed));
                 onChange?.(selected.filter((s) => s.fixed));
+                setOpen(false);
               }}
               className={cn(
                 'absolute right-0 p-0 cursor-pointer',
@@ -325,7 +329,7 @@ const MultipleSelector = forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
         <div className="relative">
           {open && (
             <CommandList
-              className="absolute top-1 z-10 w-full rounded-md border shadow-md overflow-y-scroll scrollbar-hide bg-white"
+              className="absolute top-1 z-100 w-full rounded-md border shadow-md overflow-y-scroll scrollbar-hide bg-white"
               onMouseLeave={() => {
                 setOnScrollbar(false);
               }}

@@ -5,7 +5,7 @@ import SelectItem from './components/SelectItem';
 import SelectTrigger from './components/SelectTrigger';
 import { ISelect } from './type';
 
-const Select = ({ items, onChange, value, placeholder, className, label }: ISelect) => {
+const Select = ({ items, onChange, value, placeholder, className, label, classNameContent }: ISelect) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <div className={className}>
@@ -18,7 +18,7 @@ const Select = ({ items, onChange, value, placeholder, className, label }: ISele
         <SelectTrigger open={open}>
           <Value placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className={classNameContent}>
           <Group>
             {items.map((item) => (
               <SelectItem
