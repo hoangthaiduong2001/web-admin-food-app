@@ -1,6 +1,13 @@
+import Avatar from '@/components/Avatar';
 import SortingColumn from '@/components/Table/components/sortingTable';
-import { IOrderResType } from '@/types/order';
+import { PaymentOrder, StatusOrder } from '@/types/common';
+import { IOrderResType, IProductOrder } from '@/types/order';
 import { ColumnDef } from '@tanstack/react-table';
+import { useState } from 'react';
+import DeleteOrder from './components/deleteOrder';
+import DetailOrder from './components/detailOrder';
+import UpdateOrder from './components/updateOrder';
+import { defaultValueOrder } from './const';
 
 export const orderColumns: ColumnDef<IOrderResType>[] = [
   {
@@ -71,13 +78,18 @@ export const orderColumns: ColumnDef<IOrderResType>[] = [
     accessorKey: 'products',
     header: 'Products',
     cell: function Actions({ row }) {
-      // const [products, setProducts] = useState<IListProductCategories[]>([]);
-      // const [id, setId] = useState<string>('');
+      const [products, setProducts] = useState<IProductOrder[]>([]);
       const handleSetSelect = () => {
-        //   setProducts(row.original.products);
-        //   setId(row.original._id);
+        setProducts(row.original.products);
       };
-      return <div className="flex items-center justify-center gap-2">detail</div>;
+      return (
+        <div className="flex items-center justify-center gap-2">
+          <DetailOrder
+            onClick={handleSetSelect}
+            products={products}
+          />
+        </div>
+      );
     },
   },
   {
@@ -86,23 +98,94 @@ export const orderColumns: ColumnDef<IOrderResType>[] = [
     header: 'Action',
     size: 270,
     cell: function Actions({ row }) {
-      // const [product, setProduct] = useState<ICategoriesResType>(initialProductCategories);
+      const [id, setId] = useState<string>('');
+      const [payment, setPayment] = useState<PaymentOrder>(PaymentOrder.Unpaid);
+      const [status, setStatus] = useState<StatusOrder>(StatusOrder.Waiting);
+      const [order, setOrder] = useState<IOrderResType>(defaultValueOrder);
       const handleSetSelect = () => {
-        //   setProduct(row.original);
+        setId(row.original._id);
+        setPayment(row.original.payment);
+        setStatus(row.original.status);
+        setOrder(row.original);
       };
       return (
         <div className="flex items-center justify-center gap-2">
-          edit
-          {/* <EditCategories
-              product={product}
-              onClick={handleSetSelect}
-            />
-            <DeleteCategories
-              product={product}
-              onClick={handleSetSelect} 
-            />*/}
+          <UpdateOrder
+            id={id}
+            payment={payment}
+            status={status}
+            onClick={handleSetSelect}
+          />
+          <DeleteOrder
+            order={order}
+            onClick={handleSetSelect}
+          />
         </div>
       );
     },
+  },
+];
+
+export const productsOrderColumns: ColumnDef<IProductOrder>[] = [
+  {
+    id: 'title',
+    accessorFn: (row) => row.product.title,
+    header: ({ column }) => (
+      <SortingColumn
+        column={column}
+        label="Title"
+      />
+    ),
+    cell: ({ row }) => {
+      const product = row.original.product;
+      return <div>{product.title}</div>;
+    },
+  },
+  {
+    accessorKey: 'img',
+    header: 'Image',
+    cell: ({ row }) => (
+      <div className="flex items-center justify-center">
+        <Avatar url={row.original.product.img} />
+      </div>
+    ),
+  },
+  {
+    id: 'price',
+    accessorFn: (row) => row.product.price,
+    header: ({ column }) => (
+      <SortingColumn
+        column={column}
+        label="Price"
+      />
+    ),
+    cell: ({ row }) => {
+      const product = row.original.product;
+      return <div>{product.price}</div>;
+    },
+  },
+  {
+    id: 'discount',
+    accessorFn: (row) => row.product.discount,
+    header: ({ column }) => (
+      <SortingColumn
+        column={column}
+        label="Discount"
+      />
+    ),
+    cell: ({ row }) => {
+      const product = row.original.product;
+      return <div>{product.discount}</div>;
+    },
+  },
+  {
+    accessorKey: 'quantity',
+    header: ({ column }) => (
+      <SortingColumn
+        column={column}
+        label="Quantity"
+      />
+    ),
+    cell: ({ row }) => <div>{row.original.quantity}</div>,
   },
 ];

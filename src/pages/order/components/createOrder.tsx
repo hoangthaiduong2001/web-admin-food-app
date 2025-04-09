@@ -3,9 +3,10 @@ import { useGetAllProduct } from '@/apis/hooks/product';
 import { useGetAllUser } from '@/apis/hooks/user';
 import Dialog from '@/components/Dialog';
 import { Option } from '@/components/MultipleSelect/type';
+import { showToast } from '@/components/Toast';
 import { IProduct } from '@/types/product';
 import { IUser } from '@/types/user';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TOrderBody } from '../type';
 import FormOrder from './form';
 
@@ -35,8 +36,25 @@ const AddOrder = () => {
   };
 
   const onSubmit = () => {
-    console.log('orders', orders);
+    createOrder(
+      { customer: selectUser, products: orders },
+      {
+        onSuccess: (data) => {
+          setSelectUser('');
+          setSelectProduct([]);
+          setOrders([]);
+          setOpenDialog(false);
+          showToast({ message: data.message, type: 'success' });
+        },
+        onError: (error) => {
+          showToast({ message: error.message, type: 'error' });
+        },
+      }
+    );
   };
+  useEffect(() => {
+    setSelectUser(items(dataAllUser.data?.data || [])?.[0]?.value || '');
+  }, []);
   return (
     <div>
       <Dialog
