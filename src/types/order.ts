@@ -33,11 +33,6 @@ export interface OrderResType {
   count: number;
 }
 
-// export interface CategoriesResType {
-//   message: string;
-//   data: ICategoriesResType[];
-// }
-
 export interface CreateOrderBodyType {
   customer: string;
   products: {
@@ -50,19 +45,15 @@ export interface CreateOrderResType {
   message: string;
 }
 
-// export interface GetByIdCategoriesResType {
-//   message: string;
-//   data: ICategoriesResType;
-// }
+export interface UpdateOrderBodyType {
+  status: StatusOrder;
+  payment: PaymentOrder;
+}
 
-// export interface UpdateCategoriesBodyType {
-//   name: string;
-// }
+export interface UpdateOrderResType {
+  message: string;
+}
 
-// export interface UpdateCategoriesResType {
-//   message: string;
-// }
-
-// export interface DeleteCategoriesResType {
-//   message: string;
-// }
+export interface DeleteOrderResType {
+  message: string;
+}

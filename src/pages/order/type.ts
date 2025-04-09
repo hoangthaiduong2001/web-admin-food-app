@@ -2,7 +2,7 @@ import { Option } from '@/components/MultipleSelect/type';
 import { ItemSelect } from '@/components/Select/type';
 
 export type TOrderBody = {
-  productId: string;
+  product: string;
   quantity: number;
 };
 

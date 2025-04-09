@@ -1,6 +1,7 @@
 import MultipleSelector from '@/components/MultipleSelect';
 import { Quantity } from '@/components/Quantity';
 import Select from '@/components/Select';
+import { useEffect } from 'react';
 import { TFormInstanceOrder } from '../type';
 
 const FormOrder = ({
@@ -13,16 +14,16 @@ const FormOrder = ({
   orders,
   setOrders,
 }: TFormInstanceOrder) => {
-  const handleQuantityChange = (productId: string, quantity: number) => {
+  const handleQuantityChange = (product: string, quantity: number) => {
     const newOrders = (() => {
       if (quantity === 0) {
-        return orders.filter((order) => order.productId !== productId);
+        return orders.filter((order) => order.product !== product);
       }
 
-      const index = orders.findIndex((order) => order.productId === productId);
+      const index = orders.findIndex((order) => order.product === product);
 
       if (index === -1) {
-        return [...orders, { productId, quantity }];
+        return [...orders, { product, quantity }];
       }
 
       const updatedOrders = [...orders];
@@ -32,10 +33,17 @@ const FormOrder = ({
 
     setOrders(newOrders);
   };
+  useEffect(() => {
+    const updatedOrders = optionProduct.map((item) => {
+      const existing = orders.find((order) => order.product === item.value);
+      return existing || { product: item.value, quantity: 1 };
+    });
+    setOrders(updatedOrders);
+  }, [optionProduct]);
   return (
     <div className="sm:w-10/12 md:w-8/12 lg:w-10/12 xl:w-full text-center">
       <Select
-        label="Select ussr"
+        label="Select user"
         placeholder="Filter"
         items={items}
         value={selectUser}
@@ -61,7 +69,7 @@ const FormOrder = ({
           >
             <span>{item.label}</span>
             <Quantity
-              value={orders.find((order) => order.productId === item.value)?.quantity || 1}
+              value={orders.find((order) => order.product === item.value)?.quantity || 1}
               onChange={(quantity) => handleQuantityChange(item.value, quantity)}
             />
           </div>

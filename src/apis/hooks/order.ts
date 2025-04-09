@@ -1,14 +1,16 @@
-import {
-  DeleteCategoriesResType,
-  GetByIdCategoriesResType,
-  UpdateCategoriesBodyType,
-  UpdateCategoriesResType,
-} from '@/types/categories';
+import { GetByIdCategoriesResType } from '@/types/categories';
 import { ErrorType } from '@/types/error';
-import { CreateOrderBodyType, CreateOrderResType, OrderResType } from '@/types/order';
+import {
+  CreateOrderBodyType,
+  CreateOrderResType,
+  DeleteOrderResType,
+  OrderResType,
+  UpdateOrderBodyType,
+  UpdateOrderResType,
+} from '@/types/order';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { deleteCategories, deleteCategoriesDetail, editCategories, getCategoriesById } from '../api/categories';
-import { createOrder, getAllOrder } from '../api/order';
+import { getCategoriesById } from '../api/categories';
+import { createOrder, deleteOrder, getAllOrder, updateCategories } from '../api/order';
 
 export const useGetAllOrder = () => {
   return useQuery<OrderResType, ErrorType>({
@@ -36,32 +38,22 @@ export const useCreateOrderMutation = () => {
   });
 };
 
-export const useUpdateCategoriesMutation = ({ id }: { id: string }) => {
+export const useUpdateOrderMutation = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
-  return useMutation<UpdateCategoriesResType, ErrorType, UpdateCategoriesBodyType>({
-    mutationFn: (body: UpdateCategoriesBodyType) => editCategories(body, id),
+  return useMutation<UpdateOrderResType, ErrorType, UpdateOrderBodyType>({
+    mutationFn: (body: UpdateOrderBodyType) => updateCategories(body, id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['get-all-categories'], exact: true, refetchActive: true });
+      queryClient.invalidateQueries({ queryKey: ['get-all-order'], exact: true, refetchActive: true });
     },
   });
 };
 
-export const useDeleteCategoriesMutation = () => {
+export const useDeleteOrderMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation<DeleteCategoriesResType, ErrorType, string>({
-    mutationFn: (id: string) => deleteCategories(id),
+  return useMutation<DeleteOrderResType, ErrorType, string>({
+    mutationFn: (id: string) => deleteOrder(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['get-all-categories'], exact: true });
-    },
-  });
-};
-
-export const useDeleteCategoriesDetailMutation = ({ categoriesId }: { categoriesId: string }) => {
-  const queryClient = useQueryClient();
-  return useMutation<DeleteCategoriesResType, ErrorType, string>({
-    mutationFn: (productId: string) => deleteCategoriesDetail(categoriesId, productId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['get-all-categories'], exact: true });
+      queryClient.invalidateQueries({ queryKey: ['get-all-order'], exact: true });
     },
   });
 };
