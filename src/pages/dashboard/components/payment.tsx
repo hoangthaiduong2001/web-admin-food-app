@@ -1,21 +1,24 @@
+import { PaymentOrder } from '@/types/common';
+import { OrderResType } from '@/types/order';
 import ReactApexChart from 'react-apexcharts';
 import { IChartData } from '../type';
 
-const Chart = ({ className }: { className?: string }) => {
+const PaymentDashboard = ({ className, orders }: { className?: string; orders: OrderResType | undefined }) => {
+  const unpaidOrders = orders?.data.filter((item) => item.payment === PaymentOrder.Unpaid).length || 0;
+  const paidOrders = orders?.data.filter((item) => item.payment === PaymentOrder.Paid).length || 0;
   const dataChart: IChartData = {
-    series: [100, 55, 13, 43, 22],
+    series: [unpaidOrders, paidOrders],
     options: {
       chart: {
-        width: 380,
         type: 'pie',
       },
-      labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+      labels: ['Unpaid', 'Paid'],
       responsive: [
         {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200,
+              width: '100%',
             },
             legend: {
               position: 'bottom',
@@ -32,10 +35,10 @@ const Chart = ({ className }: { className?: string }) => {
         options={dataChart.options}
         series={dataChart.series}
         type="pie"
-        width={380}
+        width={450}
       />
     </div>
   );
 };
 
-export default Chart;
+export default PaymentDashboard;
