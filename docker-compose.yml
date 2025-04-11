@@ -1,0 +1,6 @@
+services:
+  app:
+    image: food-admin/react:v1
+    ports:
+      - '3002:3002'
+    restart: unless-stopped
